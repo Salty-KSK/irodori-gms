@@ -4,7 +4,7 @@
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js';
 import { getFirestore, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js';
+import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -27,5 +27,5 @@ export {
   db, auth, googleProvider,
   collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc,
   onSnapshot, query, orderBy,
-  signInWithPopup, onAuthStateChanged, signOut
+  signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut
 };

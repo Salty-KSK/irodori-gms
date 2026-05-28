@@ -4,7 +4,7 @@
 
 import { router } from './router.js';
 import { store } from './store.js';
-import { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut } from './firebase-config.js';
+import { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from './firebase-config.js';
 import { $, $$, delegate, hideModal } from './utils/helpers.js';
 
 // ── Page Imports ──
@@ -20,6 +20,11 @@ import { InstagramPage } from './pages/instagram.js';
 import { SubscriptionsPage } from './pages/subscriptions.js';
 import { BookingsPage } from './pages/bookings.js';
 
+// モバイル判定
+function isMobile() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+}
+
 class App {
   constructor() {
     this.setupAuth();
@@ -32,17 +37,36 @@ class App {
     const loginBtn = $('#googleLoginBtn');
     const appShell = $('#app');
 
+    // リダイレクト結果を確認（モバイルからリダイレクトで戻ってきた場合）
+    getRedirectResult(auth).catch((error) => {
+      console.error('Redirect login error:', error);
+      const errorEl = $('#loginError');
+      if (errorEl && error.code !== 'auth/popup-closed-by-user') {
+        if (error.code === 'auth/unauthorized-domain') {
+          errorEl.textContent = 'このドメインは許可されていません。Firebase Consoleで設定を確認してください。';
+        } else {
+          errorEl.textContent = 'ログインに失敗しました。もう一度お試しください。';
+        }
+        errorEl.style.display = 'block';
+      }
+    });
+
     // Googleログインボタン
     loginBtn?.addEventListener('click', async () => {
       loginBtn.disabled = true;
       loginBtn.querySelector('.login-btn-text').textContent = 'ログイン中...';
       try {
-        await signInWithPopup(auth, googleProvider);
+        if (isMobile()) {
+          // モバイル: リダイレクト方式（ポップアップブロック回避）
+          await signInWithRedirect(auth, googleProvider);
+        } else {
+          // デスクトップ: ポップアップ方式
+          await signInWithPopup(auth, googleProvider);
+        }
       } catch (error) {
         console.error('Login failed:', error);
         loginBtn.disabled = false;
         loginBtn.querySelector('.login-btn-text').textContent = 'Googleでログイン';
-        // エラーメッセージ表示
         const errorEl = $('#loginError');
         if (errorEl) {
           if (error.code === 'auth/popup-closed-by-user') {
