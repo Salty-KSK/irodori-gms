@@ -101,7 +101,7 @@ class App {
       '/finance': '収支管理',
       '/suppliers': '仕入れ先リスト',
       '/equipment': '機材リスト',
-      '/projects': '案件リスト',
+      '/projects': '進捗管理',
       '/locations': 'ロケ地データベース',
       '/sns-ideas': 'SNSネタ帳',
       '/instagram': 'Instagram保存',

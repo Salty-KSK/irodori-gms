@@ -1,5 +1,5 @@
 // ============================================================
-// GMS - Projects Page (案件リスト)
+// GMS - Projects Page (進捗管理)
 // ============================================================
 
 import { store } from '../store.js';
@@ -32,7 +32,7 @@ export class ProjectsPage {
         <!-- Page Header -->
         <div class="page-header">
           <div class="page-header-left">
-            <h1 class="page-title">案件リスト</h1>
+            <h1 class="page-title">進捗管理</h1>
             <p class="page-subtitle">撮影案件の管理・進捗追跡</p>
           </div>
           <div class="page-header-right">
@@ -145,7 +145,7 @@ export class ProjectsPage {
   }
 
   init() {
-    setPageTitle('案件リスト');
+    setPageTitle('進捗管理');
     this.loadData();
     this.bindEvents();
   }
