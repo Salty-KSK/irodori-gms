@@ -1,0 +1,23 @@
+/* ============================================================
+   GMS - CSS Entry Point
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+@import './variables.css';
+@import './reset.css';
+@import './base.css';
+@import './components.css';
+@import './layout.css';
+@import './pages/dashboard.css';
+@import './pages/clients.css';
+@import './pages/finance.css';
+@import './pages/projects.css';
+@import './pages/equipment.css';
+@import './pages/suppliers.css';
+@import './pages/locations.css';
+@import './pages/sns-ideas.css';
+@import './pages/instagram.css';
+@import './pages/subscriptions.css';
+@import './pages/bookings.css';

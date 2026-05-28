@@ -1,0 +1,92 @@
+/* ============================================================
+   Page Styles - Clients (顧客リスト)
+   ============================================================ */
+
+/* ── Page Layout ── */
+.page-clients .page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.page-clients .page-title {
+  font: var(--text-display-sm);
+  color: var(--md-on-surface);
+  margin-bottom: var(--space-1);
+}
+
+.page-clients .page-subtitle {
+  font: var(--text-body-md);
+  color: var(--md-on-surface-variant);
+}
+
+/* ── Client Detail Modal ── */
+.client-detail-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.client-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.client-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.client-detail-item .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--md-on-surface-variant);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Table Tweaks ── */
+.page-clients .data-table tbody tr {
+  cursor: pointer;
+}
+
+.page-clients .data-table tbody tr:hover {
+  background: var(--md-surface-container-low);
+}
+
+/* ── Filter Chips in Toolbar ── */
+.page-clients .data-table-toolbar-left {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .page-clients .data-table-toolbar-left {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .page-clients .page-header {
+    flex-direction: column;
+  }
+
+  .page-clients .page-header-right {
+    width: 100%;
+  }
+
+  .page-clients .page-header-right .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .client-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

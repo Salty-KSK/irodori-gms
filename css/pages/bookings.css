@@ -1,0 +1,88 @@
+/* ============================================================
+   予約管理 - Page Styles
+   ============================================================ */
+
+/* ── Booking Table ── */
+.page-bookings .data-table td:first-child {
+  font-weight: 500;
+}
+
+.page-bookings .data-table .avatar-sm {
+  width: 28px;
+  height: 28px;
+  font: var(--text-label-sm);
+}
+
+/* ── Confirm Button ── */
+.booking-confirm-btn {
+  height: 32px !important;
+  padding: 0 var(--space-3) !important;
+  font: var(--text-label-md) !important;
+  gap: var(--space-1) !important;
+  white-space: nowrap;
+}
+
+.booking-confirm-btn .material-symbols-outlined {
+  font-size: 16px !important;
+}
+
+/* ── Chip xs (small chip for table) ── */
+.chip-xs {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  height: 22px;
+  font: var(--text-label-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--md-outline);
+  background: transparent;
+  color: var(--md-on-surface);
+  white-space: nowrap;
+}
+
+/* ── Table Row Hover Effect ── */
+.page-bookings .data-table tbody tr {
+  cursor: default;
+}
+
+/* ── Detail Modal ── */
+.page-bookings .detail-section {
+  margin-bottom: var(--space-4);
+}
+
+/* ── Action Buttons in Table ── */
+.page-bookings .data-table td:last-child {
+  white-space: nowrap;
+}
+
+.page-bookings .data-table td .btn-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.page-bookings .data-table td .btn-icon .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* ── Status Specific Styling ── */
+.page-bookings tr[data-status="キャンセル"] td {
+  opacity: 0.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .page-bookings .data-table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-bookings .data-table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-bookings .search-bar {
+    max-width: none;
+  }
+}

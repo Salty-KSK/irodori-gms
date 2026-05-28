@@ -1,0 +1,295 @@
+/* ============================================================
+   SNSネタ帳 - Page Styles
+   ============================================================ */
+
+.page-sns-ideas .filter-section {
+  padding: 0;
+}
+
+.page-sns-ideas .filter-label {
+  font: var(--text-label-md);
+  color: var(--md-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Kanban Board ── */
+.kanban-board {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-4);
+  min-height: 400px;
+  scrollbar-width: thin;
+}
+
+.kanban-board::-webkit-scrollbar {
+  height: 6px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+  background: var(--md-outline);
+  border-radius: var(--radius-full);
+}
+
+.kanban-column {
+  min-width: 260px;
+  max-width: 320px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--md-outline-variant);
+  overflow: hidden;
+}
+
+.kanban-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+}
+
+.kanban-column-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-title-sm);
+  color: var(--md-on-surface);
+}
+
+.kanban-column-title .material-symbols-outlined {
+  font-size: 18px;
+  color: var(--md-primary);
+}
+
+.kanban-column-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--md-surface-container-highest);
+  font: var(--text-label-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.kanban-column-body {
+  flex: 1;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+  max-height: 60vh;
+  scrollbar-width: thin;
+}
+
+/* ── Kanban Card ── */
+.kanban-card {
+  padding: var(--space-3) var(--space-4);
+  cursor: default;
+  transition: all var(--transition-fast);
+}
+
+.kanban-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.kanban-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.kanban-card-title {
+  font: var(--text-title-md);
+  color: var(--md-on-surface);
+  flex: 1;
+  line-height: 1.4;
+}
+
+.kanban-card-actions {
+  display: flex;
+  gap: 0;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.kanban-card:hover .kanban-card-actions {
+  opacity: 1;
+}
+
+.kanban-card-actions .btn-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.kanban-card-actions .btn-icon .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.kanban-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.kanban-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.kanban-card-meta .chip-sm {
+  height: 24px;
+  font: var(--text-label-sm);
+  padding: 0 var(--space-2);
+  gap: var(--space-1);
+}
+
+/* ── Priority Badge ── */
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  font: var(--text-label-sm);
+  font-weight: 600;
+}
+
+.priority-high {
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+}
+
+.priority-medium {
+  background: var(--md-warning-container);
+  color: var(--md-on-warning-container);
+}
+
+.priority-low {
+  background: var(--md-surface-container-highest);
+  color: var(--md-on-surface-variant);
+}
+
+/* ── Hashtags ── */
+.kanban-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.hashtag {
+  font: var(--text-label-sm);
+  color: var(--md-primary);
+  background: var(--md-info-container);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+}
+
+.hashtag-more {
+  font: var(--text-label-sm);
+  color: var(--md-on-surface-variant);
+  padding: 2px var(--space-2);
+}
+
+/* ── Card Date ── */
+.kanban-card-date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.kanban-card-date .material-symbols-outlined {
+  font-size: 14px;
+}
+
+/* ── Kanban Empty ── */
+.kanban-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-4);
+  color: var(--md-on-surface-variant);
+  opacity: 0.5;
+}
+
+.kanban-empty .material-symbols-outlined {
+  font-size: 32px;
+}
+
+.kanban-empty span:last-child {
+  font: var(--text-body-sm);
+}
+
+/* ── Platform Chip Colors ── */
+.chip-sm[data-platform="Instagram"] {
+  background: #F3E5F5;
+  color: #7B1FA2;
+  border-color: transparent;
+}
+
+.chip-sm[data-platform="X"] {
+  background: var(--md-surface-container-highest);
+  color: var(--md-on-surface);
+  border-color: transparent;
+}
+
+.chip-sm[data-platform="TikTok"] {
+  background: #E0F7FA;
+  color: #00838F;
+  border-color: transparent;
+}
+
+.chip-sm[data-platform="YouTube"] {
+  background: #FCE4EC;
+  color: #C62828;
+  border-color: transparent;
+}
+
+.chip-sm[data-platform="Blog"] {
+  background: #FFF3E0;
+  color: #E65100;
+  border-color: transparent;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .kanban-board {
+    min-height: auto;
+  }
+
+  .kanban-column {
+    min-width: 240px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kanban-board {
+    flex-direction: column;
+  }
+
+  .kanban-column {
+    min-width: auto;
+    max-width: none;
+  }
+
+  .kanban-column-body {
+    max-height: 300px;
+  }
+}

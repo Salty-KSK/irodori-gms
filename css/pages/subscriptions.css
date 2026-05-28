@@ -1,0 +1,221 @@
+/* ============================================================
+   サブスク管理 - Page Styles
+   ============================================================ */
+
+/* ── Subscription Card ── */
+.sub-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.sub-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+/* ── Card Header ── */
+.sub-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-2);
+}
+
+.sub-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--md-primary-container);
+  color: var(--md-primary-on-container);
+}
+
+.sub-card-icon .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.sub-card-icon[data-category="写真編集"] {
+  background: #F3E5F5;
+  color: #7B1FA2;
+}
+
+.sub-card-icon[data-category="クラウドストレージ"] {
+  background: #E3F2FD;
+  color: #1565C0;
+}
+
+.sub-card-icon[data-category="デザイン"] {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.sub-card-icon[data-category="動画編集"] {
+  background: #FCE4EC;
+  color: #C62828;
+}
+
+.sub-card-icon[data-category="会計"] {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.sub-card-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sub-card-name {
+  font: var(--text-title-md);
+  color: var(--md-on-surface);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sub-card-info .chip-xs {
+  align-self: flex-start;
+  height: 20px;
+  font: var(--text-label-sm);
+  padding: 0 var(--space-2);
+}
+
+.sub-card-actions {
+  display: flex;
+  gap: 0;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.sub-card:hover .sub-card-actions {
+  opacity: 1;
+}
+
+.sub-card-actions .btn-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.sub-card-actions .btn-icon .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* ── Card Body ── */
+.sub-card-body {
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.sub-card-plan {
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.sub-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.sub-card-amount {
+  font: var(--text-display-sm);
+  color: var(--md-on-surface);
+  font-weight: 600;
+}
+
+.sub-card-cycle {
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.sub-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sub-card-detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.sub-card-detail .material-symbols-outlined {
+  font-size: 16px;
+  color: var(--md-on-surface-variant);
+}
+
+/* ── Card Footer ── */
+.sub-card-footer {
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--md-outline-variant);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sub-card-footer .btn-sm {
+  height: 32px;
+  font: var(--text-label-md);
+  padding: 0 var(--space-3);
+}
+
+.sub-card-footer .btn-sm .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* ── Dark Mode Overrides ── */
+[data-theme="dark"] .sub-card-icon[data-category="写真編集"] {
+  background: #4A148C;
+  color: #CE93D8;
+}
+
+[data-theme="dark"] .sub-card-icon[data-category="クラウドストレージ"] {
+  background: #0D47A1;
+  color: #90CAF9;
+}
+
+[data-theme="dark"] .sub-card-icon[data-category="デザイン"] {
+  background: #BF360C;
+  color: #FFAB91;
+}
+
+[data-theme="dark"] .sub-card-icon[data-category="動画編集"] {
+  background: #B71C1C;
+  color: #EF9A9A;
+}
+
+[data-theme="dark"] .sub-card-icon[data-category="会計"] {
+  background: #1B5E20;
+  color: #A5D6A7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .page-subscriptions .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .page-subscriptions .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .sub-card-amount {
+    font: var(--text-headline-lg);
+  }
+}

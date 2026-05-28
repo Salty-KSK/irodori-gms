@@ -1,0 +1,214 @@
+/* ============================================================
+   Base Styles - GMS Foundation
+   ============================================================ */
+
+body {
+  font: var(--text-body-md);
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-dim);
+  overflow-x: hidden;
+}
+
+/* ── Typography Utilities ── */
+.text-display-lg { font: var(--text-display-lg); }
+.text-display-md { font: var(--text-display-md); }
+.text-display-sm { font: var(--text-display-sm); }
+.text-headline-lg { font: var(--text-headline-lg); }
+.text-headline-md { font: var(--text-headline-md); }
+.text-headline-sm { font: var(--text-headline-sm); }
+.text-title-lg { font: var(--text-title-lg); }
+.text-title-md { font: var(--text-title-md); }
+.text-title-sm { font: var(--text-title-sm); }
+.text-body-lg { font: var(--text-body-lg); }
+.text-body-md { font: var(--text-body-md); }
+.text-body-sm { font: var(--text-body-sm); }
+.text-label-lg { font: var(--text-label-lg); }
+.text-label-md { font: var(--text-label-md); }
+.text-label-sm { font: var(--text-label-sm); }
+
+/* ── Color Utilities ── */
+.text-primary { color: var(--md-primary); }
+.text-secondary { color: var(--md-on-surface-variant); }
+.text-error { color: var(--md-error); }
+.text-success { color: var(--md-success); }
+.text-warning { color: var(--md-warning); }
+.text-muted { color: var(--md-on-surface-variant); opacity: 0.7; }
+
+/* ── Numeric Display ── */
+.text-numeric {
+  font-family: 'Inter', sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* ── Links ── */
+a.link {
+  color: var(--md-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a.link:hover {
+  text-decoration: underline;
+}
+
+/* ── Truncation ── */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Visibility ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.hidden { display: none !important; }
+
+/* ── Flex Utilities ── */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+.flex-1 { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+/* ── Grid Utilities ── */
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1024px) {
+  .grid-cols-3, .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 { grid-template-columns: 1fr; }
+}
+
+/* ── Spacing Utilities ── */
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-6 { padding: var(--space-6); }
+
+/* ── Animation Utilities ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in { animation: fadeIn var(--duration-medium2) var(--ease-standard); }
+.animate-fade-in-up { animation: fadeInUp var(--duration-medium2) var(--ease-decelerate); }
+.animate-fade-in-scale { animation: fadeInScale var(--duration-medium2) var(--ease-decelerate); }
+.animate-slide-right { animation: slideInRight var(--duration-medium2) var(--ease-decelerate); }
+
+/* Stagger children */
+.stagger-children > * {
+  animation: fadeInUp var(--duration-medium3) var(--ease-decelerate) both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+
+/* ── Loading State ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--md-surface-variant) 25%, var(--md-surface-container-highest) 50%, var(--md-surface-variant) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--md-outline);
+  border-top-color: var(--md-primary);
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}

@@ -1,0 +1,109 @@
+/* ============================================================
+   Suppliers Page Styles - 仕入れ先リスト
+   ============================================================ */
+
+/* ── Filter Section ── */
+.page-suppliers .sup-filter-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.page-suppliers .sup-filter-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.page-suppliers .sup-search {
+  max-width: 280px;
+  min-width: 200px;
+}
+
+@media (max-width: 640px) {
+  .page-suppliers .sup-search {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ── Table Cells ── */
+.page-suppliers .sup-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.page-suppliers .sup-name {
+  font: var(--text-title-md);
+  color: var(--md-on-surface);
+}
+
+.page-suppliers .sup-address {
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.page-suppliers .sup-cat-chip {
+  font: var(--text-label-sm);
+  height: 24px;
+  padding: 0 var(--space-2);
+}
+
+.page-suppliers .sup-web-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--md-primary);
+  text-decoration: none;
+  font: var(--text-label-md);
+  transition: opacity var(--transition-fast);
+}
+
+.page-suppliers .sup-web-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.page-suppliers .sup-web-link .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* ── Actions ── */
+.page-suppliers .sup-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.page-suppliers .sup-actions .btn-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.page-suppliers .sup-actions .btn-icon .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.page-suppliers .sup-delete-btn:hover {
+  color: var(--md-error);
+}
+
+/* ── Form ── */
+.sup-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Sort indicators ── */
+.page-suppliers .data-table th.sort-asc .sort-icon {
+  transform: rotate(0deg);
+}
+
+.page-suppliers .data-table th.sort-desc .sort-icon {
+  transform: rotate(180deg);
+}

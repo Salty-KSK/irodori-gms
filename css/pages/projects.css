@@ -1,0 +1,225 @@
+/* ============================================================
+   Page Styles - Projects (案件リスト)
+   ============================================================ */
+
+/* ── Page Layout ── */
+.page-projects .page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.page-projects .page-title {
+  font: var(--text-display-sm);
+  color: var(--md-on-surface);
+  margin-bottom: var(--space-1);
+}
+
+.page-projects .page-subtitle {
+  font: var(--text-body-md);
+  color: var(--md-on-surface-variant);
+}
+
+/* ── View Toggle ── */
+.view-toggle {
+  display: inline-flex;
+  background: var(--md-surface-container-high);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  gap: 2px;
+}
+
+.view-toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.view-toggle-btn.active {
+  background: var(--md-primary-container);
+  color: var(--md-primary-on-container);
+}
+
+.view-toggle-btn .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* ── Consent Progress in Table ── */
+.consent-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Kanban Board ── */
+.kanban-board {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-4);
+  min-height: 400px;
+}
+
+.kanban-board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-full);
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+  background: var(--md-outline);
+  border-radius: var(--radius-full);
+}
+
+.kanban-board::-webkit-scrollbar-thumb:hover {
+  background: var(--md-on-surface-variant);
+}
+
+.kanban-column {
+  min-width: 280px;
+  max-width: 300px;
+  flex-shrink: 0;
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-column-header {
+  padding: var(--space-2) var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.kanban-column-title {
+  font: var(--text-title-md);
+  color: var(--md-on-surface);
+}
+
+.kanban-column-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 60px;
+}
+
+/* ── Kanban Card ── */
+.kanban-card {
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.kanban-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.kanban-card-title {
+  font: var(--text-title-md);
+  color: var(--md-on-surface);
+  margin-bottom: var(--space-2);
+}
+
+.kanban-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.kanban-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  border: 2px dashed var(--md-outline-variant);
+  border-radius: var(--radius-sm);
+  opacity: 0.6;
+}
+
+/* ── Project Detail Modal ── */
+.project-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.project-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.project-detail-item .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--md-on-surface-variant);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Consent Detail ── */
+.consent-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.consent-detail-item {
+  padding: var(--space-2) var(--space-3);
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page-projects .page-header {
+    flex-direction: column;
+  }
+
+  .page-projects .page-header-right {
+    width: 100%;
+  }
+
+  .page-projects .page-header-right > .flex {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .page-projects .page-header-right .btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .kanban-board {
+    padding-bottom: var(--space-6);
+  }
+
+  .kanban-column {
+    min-width: 260px;
+  }
+
+  .project-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .consent-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .kanban-column {
+    min-width: 240px;
+    max-width: 280px;
+  }
+}

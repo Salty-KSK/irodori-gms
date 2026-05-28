@@ -1,0 +1,360 @@
+/* ============================================================
+   Locations Page Styles - ロケ地データベース
+   ============================================================ */
+
+/* ── Filter Section ── */
+.page-locations .loc-filter-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.page-locations .loc-filter-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.page-locations .loc-search {
+  max-width: 280px;
+  min-width: 200px;
+}
+
+@media (max-width: 640px) {
+  .page-locations .loc-search {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ── Card Grid ── */
+.page-locations .loc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 1200px) {
+  .page-locations .loc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-locations .loc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Card ── */
+.page-locations .loc-card {
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  animation: fadeInUp var(--duration-medium2) var(--ease-standard) both;
+}
+
+.page-locations .loc-card:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-locations .loc-card-body {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.page-locations .loc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-locations .loc-category-chip {
+  font: var(--text-label-sm);
+  height: 24px;
+  padding: 0 var(--space-2);
+  background: var(--md-primary-container);
+  color: var(--md-primary-on-container);
+  border-color: transparent;
+}
+
+.page-locations .loc-card-name {
+  font: var(--text-headline-sm);
+  color: var(--md-on-surface);
+  margin: 0;
+}
+
+.page-locations .loc-card-address {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+  margin: 0;
+}
+
+.page-locations .loc-card-address .material-symbols-outlined {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.page-locations .loc-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.page-locations .loc-card-fee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--text-label-md);
+  color: var(--md-on-surface);
+}
+
+.page-locations .loc-card-fee .material-symbols-outlined {
+  font-size: 18px;
+  color: var(--md-primary);
+}
+
+.page-locations .loc-fee-note {
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.page-locations .loc-card-reservation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--text-label-sm);
+  color: var(--md-warning);
+  background: var(--md-warning-container);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-xs);
+}
+
+.page-locations .loc-no-reservation {
+  color: var(--md-on-surface-variant);
+  background: var(--md-surface-container-high);
+}
+
+.page-locations .loc-card-reservation .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.page-locations .loc-card-seasons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.page-locations .loc-seasons-label {
+  font: var(--text-label-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.page-locations .loc-season-chip {
+  font: var(--text-label-sm);
+  height: 24px;
+  padding: 0 var(--space-2);
+  border-color: var(--md-outline-variant);
+}
+
+/* ── Card Footer ── */
+.page-locations .loc-card-footer {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--md-outline-variant);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-locations .loc-card-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.page-locations .loc-card-actions .btn-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.page-locations .loc-card-actions .btn-icon .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.page-locations .loc-card-delete:hover {
+  color: var(--md-error);
+}
+
+/* ── Detail Modal ── */
+.loc-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.loc-detail-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-md);
+}
+
+.loc-detail-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--md-primary-container);
+  color: var(--md-primary-on-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.loc-detail-icon .material-symbols-outlined {
+  font-size: 28px;
+}
+
+.loc-detail-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.loc-detail-name {
+  font: var(--text-headline-md);
+  color: var(--md-on-surface);
+  margin: 0;
+}
+
+.loc-detail-category-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.loc-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .loc-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loc-detail-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.loc-detail-item > .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--md-primary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.loc-detail-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.loc-detail-label {
+  font: var(--text-label-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.loc-detail-value {
+  font: var(--text-body-md);
+  color: var(--md-on-surface);
+}
+
+/* ── Detail Sections ── */
+.loc-detail-section {
+  padding-top: var(--space-3);
+}
+
+.loc-detail-section h4 {
+  font: var(--text-title-lg);
+  color: var(--md-on-surface);
+  margin: 0 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.loc-detail-section h4 .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--md-primary);
+}
+
+.loc-detail-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* ── Shooting Tips ── */
+.loc-tips-section {
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) !important;
+}
+
+.loc-tips-content {
+  font: var(--text-body-md);
+  color: var(--md-on-surface);
+  line-height: 1.6;
+}
+
+.loc-tips-content .loc-tip-item {
+  padding: var(--space-1) 0;
+}
+
+.loc-detail-notes-text {
+  font: var(--text-body-md);
+  color: var(--md-on-surface);
+  margin: 0;
+}
+
+/* ── Form ── */
+.loc-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.loc-checkbox-group {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}

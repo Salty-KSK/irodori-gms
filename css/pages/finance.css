@@ -1,0 +1,248 @@
+/* ============================================================
+   Finance Page Styles
+   ============================================================ */
+
+.page-finance {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Summary Layout ── */
+.finance-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.finance-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.finance-charts-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+/* ── Bar Chart (CSS-only vertical) ── */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  height: 240px;
+  padding-top: var(--space-6);
+}
+
+.bar-chart-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bar-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+}
+
+.bar-chart-bar {
+  width: 28px;
+  min-height: 4px;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  position: relative;
+  transition: height var(--duration-medium4) var(--ease-decelerate);
+  animation: barGrow var(--duration-long1) var(--ease-decelerate) both;
+}
+
+@keyframes barGrow {
+  from {
+    height: 0 !important;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bar-chart-bar.bar-income {
+  background: var(--md-primary);
+}
+
+.bar-chart-bar.bar-expense {
+  background: var(--md-error);
+  opacity: 0.8;
+}
+
+.bar-chart-value {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  font: var(--text-label-sm);
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+  display: none;
+}
+
+.bar-chart-bar:hover .bar-chart-value {
+  display: block;
+}
+
+.bar-chart-bar:hover {
+  opacity: 1;
+  filter: brightness(1.1);
+}
+
+.bar-chart-label {
+  font: var(--text-label-md);
+  color: var(--md-on-surface-variant);
+  margin-top: var(--space-2);
+  text-align: center;
+}
+
+/* Chart Legend */
+.chart-legend {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  justify-content: flex-end;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--text-label-md);
+  color: var(--md-on-surface-variant);
+}
+
+.chart-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* ── Horizontal Bar Chart ── */
+.horizontal-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.horizontal-chart-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.horizontal-chart-label {
+  width: 80px;
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.horizontal-chart-bar-wrapper {
+  flex: 1;
+  height: 24px;
+  background: var(--md-surface-container-high);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.horizontal-chart-bar {
+  height: 100%;
+  background: var(--md-error);
+  border-radius: var(--radius-xs);
+  opacity: 0.75;
+  min-width: 4px;
+  transition: width var(--duration-medium4) var(--ease-decelerate);
+  animation: horizontalBarGrow var(--duration-long1) var(--ease-decelerate) both;
+}
+
+@keyframes horizontalBarGrow {
+  from {
+    width: 0 !important;
+    opacity: 0;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+
+.horizontal-chart-row:nth-child(1) .horizontal-chart-bar { opacity: 1; }
+.horizontal-chart-row:nth-child(2) .horizontal-chart-bar { opacity: 0.85; }
+.horizontal-chart-row:nth-child(3) .horizontal-chart-bar { opacity: 0.7; }
+.horizontal-chart-row:nth-child(4) .horizontal-chart-bar { opacity: 0.55; }
+
+.horizontal-chart-row:hover .horizontal-chart-bar {
+  opacity: 1 !important;
+  filter: brightness(1.1);
+}
+
+.horizontal-chart-value {
+  width: 90px;
+  font: var(--text-label-md);
+  color: var(--md-on-surface);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Table Scroll ── */
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .finance-summary-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .finance-charts-row {
+    grid-template-columns: 1fr;
+  }
+  .bar-chart-bar {
+    width: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .finance-summary-stats {
+    grid-template-columns: 1fr;
+  }
+  .bar-chart {
+    height: 180px;
+    gap: var(--space-2);
+  }
+  .bar-chart-bar {
+    width: 16px;
+  }
+  .horizontal-chart-label {
+    width: 60px;
+    font: var(--text-label-sm);
+  }
+  .horizontal-chart-value {
+    width: 70px;
+    font: var(--text-label-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .bar-chart {
+    height: 150px;
+  }
+  .bar-chart-bar {
+    width: 12px;
+  }
+}

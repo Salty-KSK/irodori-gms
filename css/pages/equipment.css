@@ -1,0 +1,277 @@
+/* ============================================================
+   Equipment Page Styles - 機材リスト
+   ============================================================ */
+
+/* ── Filter Section ── */
+.page-equipment .eq-filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.page-equipment .eq-filter-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.page-equipment .eq-filter-chips,
+.page-equipment .eq-status-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.page-equipment .eq-search {
+  max-width: 280px;
+  min-width: 200px;
+}
+
+/* ── Stats ── */
+.page-equipment .eq-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+@media (max-width: 1024px) {
+  .page-equipment .eq-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .page-equipment .eq-stats {
+    grid-template-columns: 1fr;
+  }
+  .page-equipment .eq-search {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ── Table Cells ── */
+.page-equipment .eq-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.page-equipment .eq-name {
+  font: var(--text-title-md);
+  color: var(--md-on-surface);
+}
+
+.page-equipment .eq-model {
+  font: var(--text-body-sm);
+  color: var(--md-on-surface-variant);
+}
+
+.page-equipment .eq-category-chip {
+  font: var(--text-label-sm);
+  height: 24px;
+  padding: 0 var(--space-2);
+}
+
+/* ── Equipment Status Chips ── */
+.page-equipment .eq-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font: var(--text-label-md);
+  white-space: nowrap;
+}
+
+.page-equipment .eq-status-active {
+  background: var(--status-completed);
+  color: var(--status-completed-text);
+}
+
+.page-equipment .eq-status-storage {
+  background: var(--status-inquiry);
+  color: var(--status-inquiry-text);
+}
+
+.page-equipment .eq-status-repair {
+  background: var(--status-estimate);
+  color: var(--status-estimate-text);
+}
+
+/* ── Condition Badge ── */
+.page-equipment .eq-condition {
+  font: var(--text-label-md);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-xs);
+}
+
+.page-equipment .eq-condition-new {
+  color: var(--md-primary);
+}
+
+.page-equipment .eq-condition-good {
+  color: var(--md-success);
+}
+
+.page-equipment .eq-condition-fair {
+  color: var(--md-warning);
+}
+
+.page-equipment .eq-condition-poor {
+  color: var(--md-error);
+}
+
+/* ── Detail Modal ── */
+.eq-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.eq-detail-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-md);
+}
+
+.eq-detail-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--md-primary-container);
+  color: var(--md-primary-on-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.eq-detail-icon .material-symbols-outlined {
+  font-size: 28px;
+}
+
+.eq-detail-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.eq-detail-name {
+  font: var(--text-headline-md);
+  color: var(--md-on-surface);
+  margin: 0;
+}
+
+.eq-detail-model {
+  font: var(--text-body-md);
+  color: var(--md-on-surface-variant);
+  margin: var(--space-1) 0 0;
+}
+
+.eq-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .eq-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.eq-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.eq-detail-label {
+  font: var(--text-label-md);
+  color: var(--md-on-surface-variant);
+}
+
+.eq-detail-value {
+  font: var(--text-body-lg);
+  color: var(--md-on-surface);
+}
+
+.eq-detail-notes {
+  padding: var(--space-3) var(--space-4);
+  background: var(--md-surface-container-low);
+  border-radius: var(--radius-sm);
+}
+
+.eq-detail-notes p {
+  margin: var(--space-2) 0 0;
+  font: var(--text-body-md);
+  color: var(--md-on-surface);
+}
+
+/* ── Maintenance Section ── */
+.eq-maintenance-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.eq-maintenance-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eq-maintenance-header h4 {
+  font: var(--text-title-lg);
+  color: var(--md-on-surface);
+  margin: 0;
+}
+
+.eq-maintenance-table {
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.eq-maintenance-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8);
+  color: var(--md-on-surface-variant);
+}
+
+.eq-maintenance-empty .material-symbols-outlined {
+  font-size: 40px;
+  opacity: 0.3;
+}
+
+.eq-maintenance-empty p {
+  font: var(--text-body-md);
+  margin: 0;
+}
+
+/* ── Form ── */
+.eq-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Sort indicators ── */
+.page-equipment .data-table th.sort-asc .sort-icon {
+  transform: rotate(0deg);
+}
+
+.page-equipment .data-table th.sort-desc .sort-icon {
+  transform: rotate(180deg);
+}

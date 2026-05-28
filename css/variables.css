@@ -1,0 +1,363 @@
+/* ============================================================
+   GMS Design Tokens - Material Design 3 Inspired
+   ============================================================ */
+
+:root {
+  /* ── Primary ── */
+  --md-primary: #1A73E8;
+  --md-primary-hover: #1765CC;
+  --md-primary-active: #1557B0;
+  --md-primary-container: #D2E3FC;
+  --md-primary-on: #FFFFFF;
+  --md-primary-on-container: #041E49;
+
+  /* ── Secondary ── */
+  --md-secondary: #5F6368;
+  --md-secondary-hover: #4D5156;
+  --md-secondary-container: #E8EAED;
+  --md-secondary-on: #FFFFFF;
+  --md-secondary-on-container: #1F1F1F;
+
+  /* ── Tertiary ── */
+  --md-tertiary: #1E8E3E;
+  --md-tertiary-container: #CEEAD6;
+  --md-tertiary-on-container: #0D652D;
+
+  /* ── Surface ── */
+  --md-surface: #FFFFFF;
+  --md-surface-dim: #F8F9FA;
+  --md-surface-variant: #F1F3F4;
+  --md-surface-container: #FFFFFF;
+  --md-surface-container-low: #F8F9FA;
+  --md-surface-container-high: #F1F3F4;
+  --md-surface-container-highest: #E8EAED;
+  --md-on-surface: #202124;
+  --md-on-surface-variant: #5F6368;
+
+  /* ── Semantic ── */
+  --md-error: #D93025;
+  --md-error-container: #FCE8E6;
+  --md-on-error: #FFFFFF;
+  --md-on-error-container: #8C1D18;
+
+  --md-success: #188038;
+  --md-success-container: #E6F4EA;
+  --md-on-success: #FFFFFF;
+  --md-on-success-container: #0D652D;
+
+  --md-warning: #F9AB00;
+  --md-warning-container: #FEF7E0;
+  --md-on-warning: #1F1F1F;
+  --md-on-warning-container: #7C5800;
+
+  --md-info: #1A73E8;
+  --md-info-container: #E8F0FE;
+  --md-on-info-container: #174EA6;
+
+  /* ── Outline ── */
+  --md-outline: #DADCE0;
+  --md-outline-variant: #E8EAED;
+
+  /* ── Inverse ── */
+  --md-inverse-surface: #303134;
+  --md-inverse-on-surface: #E8EAED;
+  --md-inverse-primary: #8AB4F8;
+
+  /* ── Scrim / Overlay ── */
+  --md-scrim: rgba(0, 0, 0, 0.32);
+  --md-overlay: rgba(0, 0, 0, 0.04);
+
+  /* ── Status Chip Colors ── */
+  --status-inquiry: #E8F0FE;
+  --status-inquiry-text: #1A73E8;
+  --status-estimate: #FEF7E0;
+  --status-estimate-text: #E37400;
+  --status-contracted: #E6F4EA;
+  --status-contracted-text: #188038;
+  --status-preparing: #F3E8FD;
+  --status-preparing-text: #7627BB;
+  --status-shooting: #FCE8E6;
+  --status-shooting-text: #D93025;
+  --status-editing: #FFF3E0;
+  --status-editing-text: #E65100;
+  --status-delivered: #E0F7FA;
+  --status-delivered-text: #00838F;
+  --status-completed: #E8F5E9;
+  --status-completed-text: #2E7D32;
+  --status-cancelled: #F5F5F5;
+  --status-cancelled-text: #9E9E9E;
+
+  /* ============================================================
+     Typography
+     ============================================================ */
+  --font-primary: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+
+  /* Display */
+  --text-display-lg: 600 2rem/2.5rem var(--font-primary);
+  --text-display-md: 600 1.75rem/2.25rem var(--font-primary);
+  --text-display-sm: 600 1.5rem/2rem var(--font-primary);
+
+  /* Headline */
+  --text-headline-lg: 600 1.375rem/1.75rem var(--font-primary);
+  --text-headline-md: 600 1.125rem/1.5rem var(--font-primary);
+  --text-headline-sm: 600 1rem/1.375rem var(--font-primary);
+
+  /* Title */
+  --text-title-lg: 500 1rem/1.5rem var(--font-primary);
+  --text-title-md: 500 0.875rem/1.25rem var(--font-primary);
+  --text-title-sm: 500 0.8125rem/1.125rem var(--font-primary);
+
+  /* Body */
+  --text-body-lg: 400 1rem/1.5rem var(--font-primary);
+  --text-body-md: 400 0.875rem/1.25rem var(--font-primary);
+  --text-body-sm: 400 0.8125rem/1.125rem var(--font-primary);
+
+  /* Label */
+  --text-label-lg: 500 0.875rem/1.25rem var(--font-primary);
+  --text-label-md: 500 0.75rem/1rem var(--font-primary);
+  --text-label-sm: 500 0.6875rem/0.875rem var(--font-primary);
+
+  /* ============================================================
+     Spacing
+     ============================================================ */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+
+  /* ============================================================
+     Border Radius
+     ============================================================ */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+
+  /* ============================================================
+     Elevation / Shadows
+     ============================================================ */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  --shadow-2: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+  --shadow-3: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+  --shadow-4: 0 2px 3px 0 rgba(60, 64, 67, 0.3), 0 6px 10px 4px rgba(60, 64, 67, 0.15);
+  --shadow-5: 0 4px 4px 0 rgba(60, 64, 67, 0.3), 0 8px 12px 6px rgba(60, 64, 67, 0.15);
+
+  /* ============================================================
+     Transitions
+     ============================================================ */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ease-linear: cubic-bezier(0, 0, 1, 1);
+
+  --duration-short1: 50ms;
+  --duration-short2: 100ms;
+  --duration-short3: 150ms;
+  --duration-short4: 200ms;
+  --duration-medium1: 250ms;
+  --duration-medium2: 300ms;
+  --duration-medium3: 350ms;
+  --duration-medium4: 400ms;
+  --duration-long1: 450ms;
+  --duration-long2: 500ms;
+
+  --transition-fast: var(--duration-short4) var(--ease-standard);
+  --transition-normal: var(--duration-medium2) var(--ease-standard);
+  --transition-slow: var(--duration-medium4) var(--ease-standard);
+
+  /* ============================================================
+     Layout
+     ============================================================ */
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 72px;
+  --topbar-height: 64px;
+  --content-max-width: 1400px;
+  --content-padding: var(--space-6);
+
+  /* ============================================================
+     Z-Index
+     ============================================================ */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-sidebar: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-snackbar: 600;
+  --z-tooltip: 700;
+}
+
+/* ── Dark Mode ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --md-primary: #8AB4F8;
+    --md-primary-hover: #AECBFA;
+    --md-primary-active: #C6DAFC;
+    --md-primary-container: #004A77;
+    --md-primary-on: #003355;
+    --md-primary-on-container: #D2E3FC;
+
+    --md-secondary: #9AA0A6;
+    --md-secondary-hover: #BDC1C6;
+    --md-secondary-container: #3C4043;
+    --md-secondary-on: #202124;
+    --md-secondary-on-container: #E8EAED;
+
+    --md-tertiary: #81C995;
+    --md-tertiary-container: #0D652D;
+    --md-tertiary-on-container: #CEEAD6;
+
+    --md-surface: #1E1E1E;
+    --md-surface-dim: #141414;
+    --md-surface-variant: #2D2D2D;
+    --md-surface-container: #252525;
+    --md-surface-container-low: #1E1E1E;
+    --md-surface-container-high: #2D2D2D;
+    --md-surface-container-highest: #353535;
+    --md-on-surface: #E8EAED;
+    --md-on-surface-variant: #9AA0A6;
+
+    --md-error: #F28B82;
+    --md-error-container: #8C1D18;
+    --md-on-error: #601410;
+    --md-on-error-container: #F9DEDC;
+
+    --md-success: #81C995;
+    --md-success-container: #0D652D;
+    --md-on-success: #003916;
+    --md-on-success-container: #C4EED0;
+
+    --md-warning: #FDD663;
+    --md-warning-container: #7C5800;
+    --md-on-warning: #1F1F1F;
+    --md-on-warning-container: #FEEFC3;
+
+    --md-info: #8AB4F8;
+    --md-info-container: #174EA6;
+    --md-on-info-container: #D2E3FC;
+
+    --md-outline: #3C4043;
+    --md-outline-variant: #303134;
+
+    --md-scrim: rgba(0, 0, 0, 0.6);
+    --md-overlay: rgba(255, 255, 255, 0.04);
+
+    --status-inquiry: #1A3A5C;
+    --status-inquiry-text: #8AB4F8;
+    --status-estimate: #5C4500;
+    --status-estimate-text: #FDD663;
+    --status-contracted: #1B4332;
+    --status-contracted-text: #81C995;
+    --status-preparing: #3B1A5C;
+    --status-preparing-text: #CE93D8;
+    --status-shooting: #5C1A1A;
+    --status-shooting-text: #F28B82;
+    --status-editing: #5C3300;
+    --status-editing-text: #FFB74D;
+    --status-delivered: #004D56;
+    --status-delivered-text: #4DD0E1;
+    --status-completed: #1B3A26;
+    --status-completed-text: #81C995;
+    --status-cancelled: #303134;
+    --status-cancelled-text: #9AA0A6;
+
+    --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 2px 6px 2px rgba(0, 0, 0, 0.3);
+    --shadow-3: 0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 4px 8px 3px rgba(0, 0, 0, 0.3);
+    --shadow-4: 0 2px 3px 0 rgba(0, 0, 0, 0.6), 0 6px 10px 4px rgba(0, 0, 0, 0.3);
+    --shadow-5: 0 4px 4px 0 rgba(0, 0, 0, 0.6), 0 8px 12px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ── Explicit Dark Theme ── */
+[data-theme="dark"] {
+  --md-primary: #8AB4F8;
+  --md-primary-hover: #AECBFA;
+  --md-primary-active: #C6DAFC;
+  --md-primary-container: #004A77;
+  --md-primary-on: #003355;
+  --md-primary-on-container: #D2E3FC;
+
+  --md-secondary: #9AA0A6;
+  --md-secondary-hover: #BDC1C6;
+  --md-secondary-container: #3C4043;
+  --md-secondary-on: #202124;
+  --md-secondary-on-container: #E8EAED;
+
+  --md-tertiary: #81C995;
+  --md-tertiary-container: #0D652D;
+  --md-tertiary-on-container: #CEEAD6;
+
+  --md-surface: #1E1E1E;
+  --md-surface-dim: #141414;
+  --md-surface-variant: #2D2D2D;
+  --md-surface-container: #252525;
+  --md-surface-container-low: #1E1E1E;
+  --md-surface-container-high: #2D2D2D;
+  --md-surface-container-highest: #353535;
+  --md-on-surface: #E8EAED;
+  --md-on-surface-variant: #9AA0A6;
+
+  --md-error: #F28B82;
+  --md-error-container: #8C1D18;
+  --md-on-error: #601410;
+  --md-on-error-container: #F9DEDC;
+
+  --md-success: #81C995;
+  --md-success-container: #0D652D;
+  --md-on-success: #003916;
+  --md-on-success-container: #C4EED0;
+
+  --md-warning: #FDD663;
+  --md-warning-container: #7C5800;
+  --md-on-warning: #1F1F1F;
+  --md-on-warning-container: #FEEFC3;
+
+  --md-info: #8AB4F8;
+  --md-info-container: #174EA6;
+  --md-on-info-container: #D2E3FC;
+
+  --md-outline: #3C4043;
+  --md-outline-variant: #303134;
+
+  --md-scrim: rgba(0, 0, 0, 0.6);
+  --md-overlay: rgba(255, 255, 255, 0.04);
+
+  --status-inquiry: #1A3A5C;
+  --status-inquiry-text: #8AB4F8;
+  --status-estimate: #5C4500;
+  --status-estimate-text: #FDD663;
+  --status-contracted: #1B4332;
+  --status-contracted-text: #81C995;
+  --status-preparing: #3B1A5C;
+  --status-preparing-text: #CE93D8;
+  --status-shooting: #5C1A1A;
+  --status-shooting-text: #F28B82;
+  --status-editing: #5C3300;
+  --status-editing-text: #FFB74D;
+  --status-delivered: #004D56;
+  --status-delivered-text: #4DD0E1;
+  --status-completed: #1B3A26;
+  --status-completed-text: #81C995;
+  --status-cancelled: #303134;
+  --status-cancelled-text: #9AA0A6;
+
+  --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 2px 6px 2px rgba(0, 0, 0, 0.3);
+  --shadow-3: 0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 4px 8px 3px rgba(0, 0, 0, 0.3);
+  --shadow-4: 0 2px 3px 0 rgba(0, 0, 0, 0.6), 0 6px 10px 4px rgba(0, 0, 0, 0.3);
+  --shadow-5: 0 4px 4px 0 rgba(0, 0, 0, 0.6), 0 8px 12px 6px rgba(0, 0, 0, 0.3);
+}

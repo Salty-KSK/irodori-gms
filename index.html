@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="カメラマンのための総合管理システム - 顧客、案件、機材、収支をまとめて管理">
+  <title>GMS - カメラマン総合管理システム</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+</head>
+<body>
+  <div class="app-shell" id="app">
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <span class="material-symbols-outlined">photo_camera</span>
+          </div>
+          <div>
+            <div class="sidebar-logo-text">GMS</div>
+            <div class="sidebar-logo-sub">総合管理システム</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">メイン</div>
+          <button class="sidebar-item" data-route="/" data-page="dashboard">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="item-label">ダッシュボード</span>
+          </button>
+          <button class="sidebar-item" data-route="/projects" data-page="projects">
+            <span class="material-symbols-outlined">assignment</span>
+            <span class="item-label">案件リスト</span>
+          </button>
+          <button class="sidebar-item" data-route="/clients" data-page="clients">
+            <span class="material-symbols-outlined">group</span>
+            <span class="item-label">顧客リスト</span>
+          </button>
+          <button class="sidebar-item" data-route="/bookings" data-page="bookings">
+            <span class="material-symbols-outlined">event</span>
+            <span class="item-label">予約管理</span>
+          </button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">管理</div>
+          <button class="sidebar-item" data-route="/finance" data-page="finance">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            <span class="item-label">収支管理</span>
+          </button>
+          <button class="sidebar-item" data-route="/equipment" data-page="equipment">
+            <span class="material-symbols-outlined">camera</span>
+            <span class="item-label">機材リスト</span>
+          </button>
+          <button class="sidebar-item" data-route="/suppliers" data-page="suppliers">
+            <span class="material-symbols-outlined">store</span>
+            <span class="item-label">仕入れ先リスト</span>
+          </button>
+          <button class="sidebar-item" data-route="/subscriptions" data-page="subscriptions">
+            <span class="material-symbols-outlined">card_membership</span>
+            <span class="item-label">サブスク管理</span>
+          </button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">ロケ・コンテンツ</div>
+          <button class="sidebar-item" data-route="/locations" data-page="locations">
+            <span class="material-symbols-outlined">location_on</span>
+            <span class="item-label">ロケ地データベース</span>
+          </button>
+          <button class="sidebar-item" data-route="/sns-ideas" data-page="sns-ideas">
+            <span class="material-symbols-outlined">lightbulb</span>
+            <span class="item-label">SNSネタ帳</span>
+          </button>
+          <button class="sidebar-item" data-route="/instagram" data-page="instagram">
+            <span class="material-symbols-outlined">photo_library</span>
+            <span class="item-label">Instagram保存</span>
+          </button>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebarUser">
+          <div class="avatar">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">カメラマン</div>
+            <div class="sidebar-user-email">user@example.com</div>
+          </div>
+          <button class="btn-icon" id="themeToggle" title="テーマ切替">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar" id="topbar">
+        <div class="topbar-left">
+          <button class="btn-icon topbar-menu-btn" id="menuToggle">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h1 class="topbar-title" id="topbarTitle">ダッシュボード</h1>
+        </div>
+        <div class="topbar-right">
+          <div class="search-bar" id="globalSearch">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="検索..." id="globalSearchInput">
+          </div>
+          <button class="btn-icon" id="notificationBtn" title="通知">
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+          <button class="btn-icon" id="settingsBtn" title="設定">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Container -->
+      <div class="page-content" id="pageContent">
+        <!-- Pages are rendered here by the router -->
+      </div>
+    </main>
+
+    <!-- Snackbar Container -->
+    <div class="snackbar-container" id="snackbarContainer"></div>
+
+    <!-- Modal Backdrop -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">タイトル</h2>
+        <button class="btn-icon" id="modalClose">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
