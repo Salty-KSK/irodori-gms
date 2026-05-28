@@ -358,3 +358,21 @@
   gap: var(--space-4);
   flex-wrap: wrap;
 }
+
+/* ── Touch Device ── */
+@media (hover: none) and (pointer: coarse) {
+  .page-locations .loc-card-actions .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .page-locations .loc-card-actions .btn-icon .material-symbols-outlined {
+    font-size: 22px;
+  }
+
+  .page-locations .loc-card:hover {
+    transform: none;
+  }
+}

@@ -9,7 +9,8 @@
   justify-content: center;
   gap: var(--space-2);
   padding: 0 var(--space-6);
-  height: 40px;
+  height: 44px;
+  min-height: 44px;
   font: var(--text-label-lg);
   border-radius: var(--radius-full);
   border: none;
@@ -19,6 +20,7 @@
   overflow: hidden;
   white-space: nowrap;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn::before {
@@ -77,8 +79,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   border-radius: var(--radius-full);
   background: transparent;
@@ -87,6 +91,7 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-icon:hover {
@@ -247,7 +252,8 @@
   align-items: center;
   gap: var(--space-1);
   padding: 0 var(--space-3);
-  height: 32px;
+  height: 36px;
+  min-height: 36px;
   font: var(--text-label-lg);
   border-radius: var(--radius-sm);
   border: 1px solid var(--md-outline);
@@ -257,6 +263,8 @@
   transition: all var(--transition-fast);
   white-space: nowrap;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
 }
 
 .chip:hover {
@@ -486,7 +494,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  height: 48px;
+  height: 44px;
   padding: 0 var(--space-4);
   background: var(--md-surface-container-high);
   border-radius: var(--radius-full);
@@ -526,6 +534,11 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--md-outline-variant);
   overflow: hidden;
+}
+
+.data-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table-toolbar {

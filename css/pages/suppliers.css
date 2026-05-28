@@ -107,3 +107,37 @@
 .page-suppliers .data-table th.sort-desc .sort-icon {
   transform: rotate(180deg);
 }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .page-suppliers .sup-filter-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-suppliers .sup-filter-chips {
+    order: 2;
+  }
+
+  .page-suppliers .sup-search {
+    order: 1;
+  }
+
+  .page-suppliers .data-table {
+    min-width: 700px;
+  }
+}
+
+/* ── Touch Device ── */
+@media (hover: none) and (pointer: coarse) {
+  .page-suppliers .sup-actions .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .page-suppliers .sup-actions .btn-icon .material-symbols-outlined {
+    font-size: 22px;
+  }
+}

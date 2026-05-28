@@ -396,8 +396,9 @@
   font: var(--text-body-md);
   pointer-events: auto;
   animation: snackbarIn var(--duration-medium2) var(--ease-decelerate);
-  min-width: 288px;
+  min-width: 200px;
   max-width: 568px;
+  width: calc(100vw - var(--space-8));
 }
 
 .snackbar.snackbar-success { background: var(--md-success); color: white; }
@@ -464,20 +465,86 @@
 
 @media (max-width: 640px) {
   .page-content {
-    padding: var(--space-4);
+    padding: var(--space-3);
   }
 
   .topbar {
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-3);
+    height: 56px;
+  }
+
+  /* トップバー検索をモバイルで非表示 */
+  .topbar .search-bar {
+    display: none;
+  }
+
+  .topbar-title {
+    font: var(--text-title-lg);
   }
 
   .page-header {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .page-header-right {
+    width: 100%;
+  }
+
+  .page-header-right .btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* モーダルをフルスクリーン化 */
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: translateY(100%) scale(1);
+  }
+
+  .modal.active {
+    transform: translateY(0) scale(1);
+  }
+
+  .modal.modal-lg,
+  .modal.modal-xl {
+    max-width: 100%;
+  }
+
+  .modal-header {
+    padding: var(--space-4) var(--space-4) var(--space-3);
+  }
+
+  .modal-body {
+    padding: 0 var(--space-4);
+  }
+
+  .modal-footer {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
   }
 
   .fab {
     bottom: var(--space-4);
     right: var(--space-4);
+  }
+
+  /* スナックバー */
+  .snackbar-container {
+    bottom: var(--space-4);
+    width: calc(100% - var(--space-8));
+  }
+
+  .snackbar {
+    width: 100%;
+    min-width: 0;
   }
 }

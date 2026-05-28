@@ -218,8 +218,41 @@
 }
 
 @media (max-width: 640px) {
+  .kanban-board {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
   .kanban-column {
-    min-width: 240px;
-    max-width: 280px;
+    min-width: 100%;
+    max-width: none;
+    flex-shrink: 1;
+  }
+
+  .view-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ── Touch Device ── */
+@media (hover: none) and (pointer: coarse) {
+  .kanban-card:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .kanban-card .kanban-card-actions {
+    opacity: 1;
+  }
+
+  .kanban-card .kanban-card-actions .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .view-toggle-btn {
+    width: 44px;
+    height: 44px;
   }
 }

@@ -219,3 +219,26 @@
     font: var(--text-headline-lg);
   }
 }
+
+/* ── Touch Device ── */
+@media (hover: none) and (pointer: coarse) {
+  .sub-card-actions {
+    opacity: 1;
+  }
+
+  .sub-card-actions .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .sub-card-actions .btn-icon .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  .sub-card-footer .btn-sm {
+    min-height: 44px;
+    padding: 0 var(--space-4);
+  }
+}

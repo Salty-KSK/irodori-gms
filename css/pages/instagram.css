@@ -158,10 +158,63 @@
 
 @media (max-width: 640px) {
   .ig-gallery.grid-cols-3 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ig-gallery {
+    gap: var(--space-2);
   }
 
   .ig-card-thumbnail {
-    aspect-ratio: 16/9;
+    aspect-ratio: 1;
+  }
+
+  .ig-card-body {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .ig-card-footer {
+    padding: var(--space-2);
+  }
+
+  .ig-card-footer .btn-sm {
+    font: var(--text-label-sm);
+    padding: 0 var(--space-2);
+  }
+}
+
+/* ── Touch Device ── */
+@media (hover: none) and (pointer: coarse) {
+  .ig-card-overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .ig-card-overlay .btn-icon {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .ig-card-footer .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .ig-card-footer .btn-sm {
+    min-height: 44px;
+  }
+}
+
+/* ── Touch + Small screen combined ── */
+@media (hover: none) and (pointer: coarse) and (max-width: 640px) {
+  .ig-card-overlay {
+    top: auto;
+    bottom: 0;
+    height: auto;
+    padding: var(--space-2);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+    justify-content: flex-end;
   }
 }

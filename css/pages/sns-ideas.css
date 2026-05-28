@@ -293,3 +293,26 @@
     max-height: 300px;
   }
 }
+
+/* ── Touch Device ── */
+@media (hover: none) and (pointer: coarse) {
+  .kanban-card-actions {
+    opacity: 1;
+  }
+
+  .kanban-card-actions .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .kanban-card-actions .btn-icon .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  .kanban-card:hover {
+    box-shadow: none;
+    transform: none;
+  }
+}
