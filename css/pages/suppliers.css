@@ -123,9 +123,7 @@
     order: 1;
   }
 
-  .page-suppliers .data-table {
-    min-width: 700px;
-  }
+  /* テーブルはhidden-mobileで非表示のためmin-width不要 */
 }
 
 /* ── Touch Device ── */

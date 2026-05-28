@@ -241,8 +241,31 @@
 @media (max-width: 640px) {
   .bar-chart {
     height: 150px;
+    overflow: hidden;
   }
   .bar-chart-bar {
     width: 12px;
+  }
+  .finance-summary {
+    overflow-x: hidden;
+  }
+  .finance-charts-row {
+    grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+  .horizontal-chart-row {
+    gap: var(--space-2);
+  }
+  .horizontal-chart-label {
+    width: 50px;
+    font-size: 0.7rem;
+  }
+  .horizontal-chart-value {
+    width: 60px;
+    font-size: 0.7rem;
+  }
+  .card-body {
+    padding: var(--space-3);
+    overflow-x: hidden;
   }
 }
