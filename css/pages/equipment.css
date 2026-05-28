@@ -45,6 +45,10 @@
 }
 
 @media (max-width: 640px) {
+  .page-equipment {
+    max-width: 100%;
+    overflow: hidden;
+  }
   .page-equipment .eq-stats {
     grid-template-columns: 1fr;
   }
@@ -52,6 +56,14 @@
     max-width: 100%;
     min-width: 0;
     width: 100%;
+  }
+  .page-equipment .eq-filter-section {
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .page-equipment .eq-filter-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 

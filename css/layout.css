@@ -199,6 +199,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ── Top Bar ── */
@@ -469,13 +471,23 @@
 }
 
 @media (max-width: 640px) {
+  .main-content {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
   .page-content {
     padding: var(--space-3);
+    max-width: 100%;
+    overflow-x: hidden;
+    word-break: break-word;
   }
 
   .topbar {
     padding: 0 var(--space-3);
     height: 56px;
+    max-width: 100vw;
+    overflow: hidden;
   }
 
   /* トップバー検索をモバイルで非表示 */

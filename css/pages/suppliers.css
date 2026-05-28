@@ -110,9 +110,16 @@
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
+  .page-suppliers {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .page-suppliers .sup-filter-section {
     flex-direction: column;
     align-items: stretch;
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .page-suppliers .sup-filter-chips {
@@ -121,12 +128,13 @@
 
   .page-suppliers .sup-search {
     order: 1;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
   }
 
   /* テーブルはhidden-mobileで非表示のためmin-width不要 */
 }
-
-/* ── Touch Device ── */
 @media (hover: none) and (pointer: coarse) {
   .page-suppliers .sup-actions .btn-icon {
     min-width: 44px;
