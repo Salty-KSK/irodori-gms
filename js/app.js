@@ -1,9 +1,10 @@
 // ============================================================
-// GMS - Application Entry Point
+// GMS - Application Entry Point (Firebase Auth 統合版)
 // ============================================================
 
 import { router } from './router.js';
 import { store } from './store.js';
+import { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut } from './firebase-config.js';
 import { $, $$, delegate, hideModal } from './utils/helpers.js';
 
 // ── Page Imports ──
@@ -21,7 +22,87 @@ import { BookingsPage } from './pages/bookings.js';
 
 class App {
   constructor() {
-    this.init();
+    this.setupAuth();
+  }
+
+  // ── 認証フロー ──
+
+  setupAuth() {
+    const loginScreen = $('#loginScreen');
+    const loginBtn = $('#googleLoginBtn');
+    const appShell = $('#app');
+
+    // Googleログインボタン
+    loginBtn?.addEventListener('click', async () => {
+      loginBtn.disabled = true;
+      loginBtn.querySelector('.login-btn-text').textContent = 'ログイン中...';
+      try {
+        await signInWithPopup(auth, googleProvider);
+      } catch (error) {
+        console.error('Login failed:', error);
+        loginBtn.disabled = false;
+        loginBtn.querySelector('.login-btn-text').textContent = 'Googleでログイン';
+        // エラーメッセージ表示
+        const errorEl = $('#loginError');
+        if (errorEl) {
+          if (error.code === 'auth/popup-closed-by-user') {
+            errorEl.textContent = 'ログインがキャンセルされました';
+          } else if (error.code === 'auth/unauthorized-domain') {
+            errorEl.textContent = 'このドメインは許可されていません。Firebase Consoleで設定を確認してください。';
+          } else {
+            errorEl.textContent = 'ログインに失敗しました。もう一度お試しください。';
+          }
+          errorEl.style.display = 'block';
+        }
+      }
+    });
+
+    // 認証状態の監視
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // ログイン済み → アプリを表示
+        console.log('[GMS] Logged in as:', user.displayName);
+
+        // ユーザー情報をサイドバーに反映
+        this.updateUserInfo(user);
+
+        // Firestore初期化
+        await store.init();
+
+        // ログイン画面を非表示
+        if (loginScreen) {
+          loginScreen.classList.add('hidden');
+        }
+        if (appShell) {
+          appShell.style.display = 'flex';
+        }
+
+        // アプリ初期化
+        this.init();
+      } else {
+        // 未ログイン → ログイン画面を表示
+        if (loginScreen) {
+          loginScreen.classList.remove('hidden');
+        }
+        if (appShell) {
+          appShell.style.display = 'none';
+        }
+      }
+    });
+  }
+
+  updateUserInfo(user) {
+    const userName = $('.sidebar-user-name');
+    const userEmail = $('.sidebar-user-email');
+    const avatar = $('.sidebar-user .avatar');
+
+    if (userName) userName.textContent = user.displayName || 'ユーザー';
+    if (userEmail) userEmail.textContent = user.email || '';
+
+    // プロフィール画像がある場合
+    if (avatar && user.photoURL) {
+      avatar.innerHTML = `<img src="${user.photoURL}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+    }
   }
 
   init() {
@@ -30,7 +111,21 @@ class App {
     this.setupModal();
     this.setupTheme();
     this.setupSearch();
+    this.setupLogout();
     router.init('pageContent');
+  }
+
+  // ── ログアウト ──
+
+  setupLogout() {
+    const logoutBtn = $('#logoutBtn');
+    logoutBtn?.addEventListener('click', async () => {
+      if (confirm('ログアウトしますか？')) {
+        store.destroy();
+        await signOut(auth);
+        window.location.reload();
+      }
+    });
   }
 
   setupRoutes() {
@@ -154,7 +249,6 @@ class App {
       if (e.key === 'Enter') {
         const query = searchInput.value.trim();
         if (query) {
-          // Global search - for now just focus current page search
           console.log('Global search:', query);
         }
       }
