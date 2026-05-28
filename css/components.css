@@ -843,13 +843,21 @@
 
 /* ── Mobile Card List ── */
 .mobile-list {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-@media (max-width: 640px) {
-  .mobile-list { display: flex; }
+@media (min-width: 641px) {
+  .mobile-list { display: none !important; }
+}
+
+.mobile-search {
+  display: block;
+}
+
+@media (min-width: 641px) {
+  .mobile-search { display: none !important; }
 }
 
 .mobile-card {
@@ -934,15 +942,12 @@
   margin-bottom: var(--space-2);
 }
 
-/* Mobile search */
-@media (max-width: 640px) {
-  .mobile-search {
-    width: 100%;
-    margin-bottom: var(--space-3);
-  }
-
-  .mobile-search .search-bar {
-    max-width: 100%;
-  }
+/* Mobile search width */
+.mobile-search {
+  width: 100%;
+  margin-bottom: var(--space-3);
 }
 
+.mobile-search .search-bar {
+  max-width: 100%;
+}
