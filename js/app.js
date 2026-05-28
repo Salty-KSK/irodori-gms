@@ -25,6 +25,19 @@ function isMobile() {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
 }
 
+// WebView（アプリ内ブラウザ）判定
+function isWebView() {
+  const ua = navigator.userAgent || '';
+  // LINE, Instagram, Facebook, Twitter, その他アプリ内ブラウザ検出
+  return /Line\//i.test(ua) ||
+         /FBAN|FBAV/i.test(ua) ||       // Facebook
+         /Instagram/i.test(ua) ||
+         /Twitter/i.test(ua) ||
+         /MicroMessenger/i.test(ua) ||   // WeChat
+         /GSA\//i.test(ua) ||            // Google Search App
+         (/iPhone|iPod|iPad/.test(ua) && !(/Safari/i.test(ua) && !/CriOS/.test(ua)) && !/Chrome/.test(ua));
+}
+
 class App {
   constructor() {
     this.setupAuth();
@@ -36,6 +49,43 @@ class App {
     const loginScreen = $('#loginScreen');
     const loginBtn = $('#googleLoginBtn');
     const appShell = $('#app');
+
+    // WebView（アプリ内ブラウザ）検出 → Safari/Chromeで開くよう案内
+    if (isWebView()) {
+      const loginCard = loginScreen?.querySelector('.login-card');
+      if (loginCard && loginBtn) {
+        loginBtn.style.display = 'none';
+        const webviewMsg = document.createElement('div');
+        webviewMsg.className = 'webview-notice';
+        webviewMsg.innerHTML = `
+          <div style="background:#FEF7E0;color:#7C5800;padding:1rem;border-radius:12px;margin-bottom:1rem;font-size:0.85rem;line-height:1.5;">
+            <strong>⚠️ アプリ内ブラウザでは<br>ログインできません</strong><br><br>
+            SafariまたはChromeで<br>このページを開いてください。
+          </div>
+          <button id="copyUrlBtn" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;width:100%;padding:0.875rem 1.5rem;background:#1A73E8;color:white;border:none;border-radius:100px;font-size:0.95rem;font-weight:500;cursor:pointer;font-family:inherit;">
+            📋 URLをコピー
+          </button>
+          <p style="margin-top:0.75rem;font-size:0.75rem;color:#5F6368;text-align:center;">コピー後、SafariでURLを貼り付けて開いてください</p>
+        `;
+        loginBtn.parentNode.insertBefore(webviewMsg, loginBtn);
+        
+        webviewMsg.querySelector('#copyUrlBtn')?.addEventListener('click', () => {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            webviewMsg.querySelector('#copyUrlBtn').innerHTML = '✅ コピーしました！';
+          }).catch(() => {
+            // clipboard API使えない場合
+            const input = document.createElement('input');
+            input.value = window.location.href;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            webviewMsg.querySelector('#copyUrlBtn').innerHTML = '✅ コピーしました！';
+          });
+        });
+      }
+      return; // WebViewではこれ以上の認証処理をスキップ
+    }
 
     // リダイレクト結果を確認（モバイルからリダイレクトで戻ってきた場合）
     getRedirectResult(auth).catch((error) => {
