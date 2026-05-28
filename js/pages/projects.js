@@ -54,7 +54,7 @@ export class ProjectsPage {
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-4 gap-4 mb-6 stagger-children">
+        <div class="grid grid-cols-4 gap-4 mb-6 stagger-children hidden-mobile">
           <div class="stat-card">
             <div class="stat-card-icon" style="background: var(--md-info-container); color: var(--md-on-info-container);">
               <span class="material-symbols-outlined">folder</span>
@@ -86,15 +86,26 @@ export class ProjectsPage {
         </div>
 
         <!-- Filter Chips -->
-        <div class="flex gap-2 mb-4 flex-wrap" id="projectFilters">
+        <div class="chips-scroll mb-4" id="projectFilters">
           <button class="chip active" data-filter="all">全て</button>
           <button class="chip" data-filter="active">進行中</button>
           <button class="chip" data-filter="completed">完了</button>
           <button class="chip" data-filter="cancelled">キャンセル</button>
         </div>
 
-        <!-- Table View -->
-        <div id="tableView">
+        <!-- Mobile Search -->
+        <div class="mobile-search hidden-desktop">
+          <div class="search-bar">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="案件を検索..." id="projectSearchMobile" />
+          </div>
+        </div>
+
+        <!-- Mobile Card List -->
+        <div class="mobile-list hidden-desktop" id="projectMobileList"></div>
+
+        <!-- Table View (Desktop) -->
+        <div id="tableView" class="hidden-mobile">
           <div class="data-table-wrapper">
             <div class="data-table-toolbar">
               <div class="data-table-toolbar-left">
@@ -164,12 +175,23 @@ export class ProjectsPage {
     // Add button
     $('#btnAddProject')?.addEventListener('click', () => this.showAddModal());
 
-    // Search
+    // Search (desktop)
     const searchInput = $('#projectSearch');
     searchInput?.addEventListener('input', debounce((e) => {
       this.searchText = e.target.value;
+      const m = $('#projectSearchMobile');
+      if (m) m.value = e.target.value;
       this.renderList();
       if (this.viewMode === 'kanban') this.renderKanban();
+    }, 200));
+
+    // Search (mobile)
+    const mobileSearch = $('#projectSearchMobile');
+    mobileSearch?.addEventListener('input', debounce((e) => {
+      this.searchText = e.target.value;
+      const d = $('#projectSearch');
+      if (d) d.value = e.target.value;
+      this.renderList();
     }, 200));
 
     // View toggle
@@ -236,6 +258,12 @@ export class ProjectsPage {
 
     // Kanban card click
     delegate('#kanbanBoard', '.kanban-card', 'click', (e, target) => {
+      const id = target.dataset.id;
+      if (id) this.showDetailModal(id);
+    });
+
+    // Mobile card click
+    delegate('#projectMobileList', '.mobile-card', 'click', (e, target) => {
       const id = target.dataset.id;
       if (id) this.showDetailModal(id);
     });
@@ -347,6 +375,38 @@ export class ProjectsPage {
         </tr>
       `;
     }).join('');
+
+    // Mobile card list
+    const mobileList = $('#projectMobileList');
+    if (mobileList) {
+      if (filtered.length === 0) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">folder_off</span>
+            <p>案件が見つかりません</p>
+          </div>`;
+      } else {
+        mobileList.innerHTML = filtered.map(project => {
+          const clientName = this._getClientName(project.clientId);
+          return `
+            <div class="mobile-card" data-id="${project.id}">
+              <div class="mobile-card-main">
+                <div class="mobile-card-title">${project.title}</div>
+                <div class="mobile-card-sub">
+                  <span>${clientName}</span>
+                  <span>·</span>
+                  <span>${formatDate(project.shootDate)}</span>
+                </div>
+              </div>
+              <div class="mobile-card-end">
+                ${renderStatusChip(project.status)}
+                <span class="material-symbols-outlined mobile-card-chevron">chevron_right</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
   }
 
   // ── Kanban View ──

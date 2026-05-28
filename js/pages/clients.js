@@ -38,7 +38,7 @@ export class ClientsPage {
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-4 gap-4 mb-6 stagger-children">
+        <div class="grid grid-cols-4 gap-4 mb-6 stagger-children hidden-mobile">
           <div class="stat-card" id="statTotal">
             <div class="stat-card-icon" style="background: var(--md-info-container); color: var(--md-on-info-container);">
               <span class="material-symbols-outlined">group</span>
@@ -69,8 +69,28 @@ export class ClientsPage {
           </div>
         </div>
 
-        <!-- Table -->
-        <div class="data-table-wrapper animate-fade-in-up">
+        <!-- Filter Chips (mobile: horizontal scroll) -->
+        <div class="chips-scroll mb-4 hidden-desktop" id="clientFiltersMobile">
+          <button class="chip active" data-filter="all">全て</button>
+          <button class="chip" data-filter="個人">個人</button>
+          <button class="chip" data-filter="企業">企業</button>
+          <button class="chip" data-filter="代理店">代理店</button>
+          <button class="chip" data-filter="メディア">メディア</button>
+        </div>
+
+        <!-- Mobile Search -->
+        <div class="mobile-search hidden-desktop">
+          <div class="search-bar">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="顧客を検索..." id="clientSearchMobile" />
+          </div>
+        </div>
+
+        <!-- Mobile Card List -->
+        <div class="mobile-list hidden-desktop" id="clientMobileList"></div>
+
+        <!-- Table (Desktop only) -->
+        <div class="data-table-wrapper animate-fade-in-up hidden-mobile">
           <div class="data-table-toolbar">
             <div class="data-table-toolbar-left">
               <div class="search-bar" style="max-width: 320px;">
@@ -134,17 +154,43 @@ export class ClientsPage {
     // Add button
     $('#btnAddClient')?.addEventListener('click', () => this.showAddModal());
 
-    // Search
+    // Search (desktop)
     const searchInput = $('#clientSearch');
     searchInput?.addEventListener('input', debounce((e) => {
       this.searchText = e.target.value;
+      const m = $('#clientSearchMobile');
+      if (m) m.value = e.target.value;
       this.renderList();
     }, 200));
 
-    // Category filters
+    // Search (mobile)
+    const mobileSearch = $('#clientSearchMobile');
+    mobileSearch?.addEventListener('input', debounce((e) => {
+      this.searchText = e.target.value;
+      const d = $('#clientSearch');
+      if (d) d.value = e.target.value;
+      this.renderList();
+    }, 200));
+
+    // Category filters (desktop)
     delegate('#clientFilters', '.chip', 'click', (e, target) => {
       $$('#clientFilters .chip').forEach(c => c.classList.remove('active'));
+      $$('#clientFiltersMobile .chip').forEach(c => c.classList.remove('active'));
       target.classList.add('active');
+      // Sync mobile
+      const mobileChip = $(`#clientFiltersMobile .chip[data-filter="${target.dataset.filter}"]`);
+      if (mobileChip) mobileChip.classList.add('active');
+      this.currentFilter = target.dataset.filter;
+      this.renderList();
+    });
+
+    // Category filters (mobile)
+    delegate('#clientFiltersMobile', '.chip', 'click', (e, target) => {
+      $$('#clientFiltersMobile .chip').forEach(c => c.classList.remove('active'));
+      $$('#clientFilters .chip').forEach(c => c.classList.remove('active'));
+      target.classList.add('active');
+      const desktopChip = $(`#clientFilters .chip[data-filter="${target.dataset.filter}"]`);
+      if (desktopChip) desktopChip.classList.add('active');
       this.currentFilter = target.dataset.filter;
       this.renderList();
     });
@@ -158,7 +204,6 @@ export class ClientsPage {
         this.sortField = field;
         this.sortDir = 'asc';
       }
-      // Update sort icon UI
       $$('#clientsTable th').forEach(th => th.classList.remove('sorted'));
       target.classList.add('sorted');
       const icon = $('span.sort-icon', target);
@@ -182,6 +227,12 @@ export class ClientsPage {
     // Row click -> detail
     delegate('#clientsTableBody', 'tr', 'click', (e, target) => {
       if (e.target.closest('.btn-icon')) return;
+      const id = target.dataset.id;
+      if (id) this.showDetailModal(id);
+    });
+
+    // Mobile card click
+    delegate('#clientMobileList', '.mobile-card', 'click', (e, target) => {
       const id = target.dataset.id;
       if (id) this.showDetailModal(id);
     });
@@ -254,6 +305,43 @@ export class ClientsPage {
         </tr>
       `;
     }).join('');
+
+    // Mobile card list
+    const mobileList = $('#clientMobileList');
+    if (mobileList) {
+      if (filtered.length === 0) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">person_off</span>
+            <p>顧客が見つかりません</p>
+          </div>`;
+      } else {
+        mobileList.innerHTML = filtered.map(client => {
+          const projects = store.query('projects', p => p.clientId === client.id);
+          const lastProject = projects.sort((a, b) => new Date(b.shootDate || 0) - new Date(a.shootDate || 0))[0];
+          const lastDate = lastProject ? formatDate(lastProject.shootDate) : '案件なし';
+          return `
+            <div class="mobile-card" data-id="${client.id}">
+              <div class="mobile-card-avatar">${(client.name || '?').charAt(0)}</div>
+              <div class="mobile-card-main">
+                <div class="mobile-card-title">${client.name}</div>
+                <div class="mobile-card-sub">
+                  <span>${client.category || '-'}</span>
+                  <span>·</span>
+                  <span>最終: ${lastDate}</span>
+                </div>
+              </div>
+              <div class="mobile-card-end">
+                ${client.commercialUse
+                  ? '<span class="material-symbols-outlined text-success" style="font-size:20px;">check_circle</span>'
+                  : ''}
+                <span class="material-symbols-outlined mobile-card-chevron">chevron_right</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
   }
 
   // ── Add Modal ──

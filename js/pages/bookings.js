@@ -33,7 +33,7 @@ export class BookingsPage {
         </div>
 
         <!-- Status Filter -->
-        <div class="flex gap-2 flex-wrap mb-6" id="bookingStatusFilters">
+        <div class="chips-scroll mb-4" id="bookingStatusFilters">
           <button class="chip active" data-status="全て">全て</button>
           <button class="chip" data-status="申請中">申請中</button>
           <button class="chip" data-status="確認中">確認中</button>
@@ -41,8 +41,8 @@ export class BookingsPage {
           <button class="chip" data-status="キャンセル">キャンセル</button>
         </div>
 
-        <!-- Data Table -->
-        <div class="data-table-wrapper">
+        <!-- Data Table (Desktop) -->
+        <div class="data-table-wrapper hidden-mobile">
           <div class="data-table-toolbar">
             <div class="data-table-toolbar-left">
               <div class="search-bar">
@@ -90,13 +90,17 @@ export class BookingsPage {
                 </tr>
               </thead>
               <tbody id="bookingTableBody">
-                <!-- Rendered dynamically -->
               </tbody>
             </table>
           </div>
           <div class="data-table-pagination" id="bookingPagination">
             <!-- Pagination if needed -->
           </div>
+        </div>
+
+        <!-- モバイル用カードリスト -->
+        <div class="mobile-list hidden-desktop" id="bookingMobileList">
+          <!-- 動的に描画 -->
         </div>
       </div>
     `;
@@ -118,10 +122,20 @@ export class BookingsPage {
   bindEvents() {
     $('#btnAddBooking')?.addEventListener('click', () => this.showAddModal());
 
-    // Search
+    // Search (both desktop and mobile)
     const searchInput = $('#bookingSearch');
     searchInput?.addEventListener('input', debounce((e) => {
       this.searchText = e.target.value;
+      const mobileInput = $('#bookingSearchMobile');
+      if (mobileInput) mobileInput.value = e.target.value;
+      this.renderTable();
+    }));
+
+    const mobileSearchInput = $('#bookingSearchMobile');
+    mobileSearchInput?.addEventListener('input', debounce((e) => {
+      this.searchText = e.target.value;
+      const desktopInput = $('#bookingSearch');
+      if (desktopInput) desktopInput.value = e.target.value;
       this.renderTable();
     }));
 
@@ -160,6 +174,12 @@ export class BookingsPage {
     delegate('#bookingTableBody', '[data-action="delete"]', 'click', async (e, target) => {
       const id = target.closest('[data-id]').dataset.id;
       this.handleDelete(id);
+    });
+
+    // Mobile card click
+    delegate('#bookingMobileList', '.mobile-card', 'click', (e, target) => {
+      const id = target.dataset.id;
+      if (id) this.showDetailModal(id);
     });
   }
 
@@ -216,6 +236,14 @@ export class BookingsPage {
           </td>
         </tr>
       `;
+      // モバイルリストも空表示
+      const mobileList = $('#bookingMobileList');
+      if (mobileList) {
+        mobileList.innerHTML = `<div class="mobile-empty">
+          <span class="material-symbols-outlined">event</span>
+          <p>予約がありません</p>
+        </div>`;
+      }
       return;
     }
 
@@ -251,6 +279,35 @@ export class BookingsPage {
         </td>
       </tr>
     `).join('');
+
+    // Mobile card list
+    const mobileList = $('#bookingMobileList');
+    if (mobileList) {
+      if (filtered.length === 0) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">event</span>
+            <p>予約がありません</p>
+          </div>`;
+      } else {
+        mobileList.innerHTML = filtered.map(item => `
+          <div class="mobile-card" data-id="${item.id}">
+            <div class="mobile-card-avatar">${(item.clientName || '?').charAt(0)}</div>
+            <div class="mobile-card-main">
+              <div class="mobile-card-title">${item.clientName || '-'}</div>
+              <div class="mobile-card-sub">
+                ${item.shootType ? `<span>${item.shootType}</span><span>·</span>` : ''}
+                <span>${formatDate(item.preferredDate)}</span>
+              </div>
+            </div>
+            <div class="mobile-card-end">
+              ${renderStatusChip(item.status)}
+              <span class="material-symbols-outlined mobile-card-chevron">chevron_right</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
   }
 
   handleConfirm(id) {
