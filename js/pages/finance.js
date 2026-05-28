@@ -95,6 +95,30 @@ export class FinancePage {
       await this.handleDeleteExpense(id);
     });
 
+    // Mobile card click events for Income
+    delegate('.page-finance', '#incomeMobileList .mobile-card', 'click', (e, target) => {
+      if (e.target.closest('[data-action="deleteIncome"]')) return;
+      const id = target.dataset.id;
+      if (id) this.showIncomeModal(id);
+    });
+    delegate('.page-finance', '#incomeMobileList [data-action="deleteIncome"]', 'click', async (e, target) => {
+      e.stopPropagation();
+      const id = target.dataset.id;
+      await this.handleDeleteIncome(id);
+    });
+
+    // Mobile card click events for Expense
+    delegate('.page-finance', '#expenseMobileList .mobile-card', 'click', (e, target) => {
+      if (e.target.closest('[data-action="deleteExpense"]')) return;
+      const id = target.dataset.id;
+      if (id) this.showExpenseModal(id);
+    });
+    delegate('.page-finance', '#expenseMobileList [data-action="deleteExpense"]', 'click', async (e, target) => {
+      e.stopPropagation();
+      const id = target.dataset.id;
+      await this.handleDeleteExpense(id);
+    });
+
     // Sort
     delegate('.page-finance', '[data-sort]', 'click', (e, target) => {
       const field = target.dataset.sort;
@@ -108,11 +132,24 @@ export class FinancePage {
       if (this.currentTab === 'expenses') this.renderExpenseTable();
     });
 
-    // Search
+    // Search (sync desktop and mobile)
     delegate('.page-finance', '.search-bar input', 'input', debounce((e) => {
-      this.searchText = e.target.value;
-      if (this.currentTab === 'income') this.renderIncomeTable();
-      if (this.currentTab === 'expenses') this.renderExpenseTable();
+      const val = e.target.value;
+      this.searchText = val;
+
+      if (this.currentTab === 'income') {
+        const dInput = $('#incomeSearch');
+        const mInput = $('#incomeSearchMobile');
+        if (e.target === dInput && mInput) mInput.value = val;
+        if (e.target === mInput && dInput) dInput.value = val;
+        this.renderIncomeTable();
+      } else if (this.currentTab === 'expenses') {
+        const dInput = $('#expenseSearch');
+        const mInput = $('#expenseSearchMobile');
+        if (e.target === dInput && mInput) mInput.value = val;
+        if (e.target === mInput && dInput) dInput.value = val;
+        this.renderExpenseTable();
+      }
     }, 200));
   }
 
@@ -287,7 +324,8 @@ export class FinancePage {
     const panel = $('#tabIncome');
     panel.innerHTML = `
       <div class="mt-4">
-        <div class="data-table-wrapper">
+        <!-- Desktop Table View -->
+        <div class="data-table-wrapper hidden-mobile">
           <div class="data-table-toolbar">
             <div class="data-table-toolbar-left">
               <div class="search-bar" style="max-width:320px;">
@@ -319,6 +357,20 @@ export class FinancePage {
             </table>
           </div>
         </div>
+
+        <!-- Mobile List View -->
+        <div class="mobile-search hidden-desktop mb-4">
+          <div class="flex gap-2">
+            <div class="search-bar" style="flex:1;">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" placeholder="売上を検索..." id="incomeSearchMobile">
+            </div>
+            <button class="btn btn-filled" data-action="addIncome" style="padding: 0 var(--space-3); height: 40px; min-width: 40px;">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+        <div class="mobile-list hidden-desktop" id="incomeMobileList"></div>
       </div>
     `;
     this.renderIncomeTable();
@@ -334,6 +386,7 @@ export class FinancePage {
     }
 
     const tbody = $('#incomeTableBody');
+    const mobileList = $('#incomeMobileList');
     if (!tbody) return;
 
     if (data.length === 0) {
@@ -345,6 +398,14 @@ export class FinancePage {
           </div>
         </td></tr>
       `;
+      if (mobileList) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">payments</span>
+            <p>売上データがありません</p>
+          </div>
+        `;
+      }
       return;
     }
 
@@ -373,6 +434,37 @@ export class FinancePage {
       `;
     }).join('');
 
+    if (mobileList) {
+      mobileList.innerHTML = data.map(item => {
+        const client = store.getById('clients', item.clientId);
+        const clientName = client ? client.name : '-';
+        return `
+          <div class="mobile-card" data-id="${item.id}">
+            <div class="mobile-card-avatar" style="background:var(--md-primary-container); color:var(--md-primary);">
+              <span class="material-symbols-outlined">trending_up</span>
+            </div>
+            <div class="mobile-card-main">
+              <div class="mobile-card-title">${item.title || '-'}</div>
+              <div class="mobile-card-sub">
+                <span>${clientName}</span><span>·</span>
+                <span class="text-numeric" style="font-weight:600; color:var(--md-primary);">${formatCurrency(item.totalAmount)}</span>
+              </div>
+              <div class="mobile-card-sub" style="font-size: 11px; margin-top: 4px;">
+                ${item.invoiceDate ? `<span>請求: ${formatDate(item.invoiceDate)}</span>` : ''}
+                ${item.receivedDate ? `<span>· 入金: ${formatDate(item.receivedDate)}</span>` : ''}
+              </div>
+            </div>
+            <div class="mobile-card-end">
+              ${renderStatusChip(item.status)}
+              <button class="btn-icon" data-action="deleteIncome" data-id="${item.id}" title="削除" style="margin-left: 8px;" onclick="event.stopPropagation()">
+                <span class="material-symbols-outlined" style="font-size:20px; color:var(--md-error);">delete</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // Update sort indicators
     this._updateSortIndicators();
   }
@@ -383,7 +475,8 @@ export class FinancePage {
     const panel = $('#tabExpenses');
     panel.innerHTML = `
       <div class="mt-4">
-        <div class="data-table-wrapper">
+        <!-- Desktop Table View -->
+        <div class="data-table-wrapper hidden-mobile">
           <div class="data-table-toolbar">
             <div class="data-table-toolbar-left">
               <div class="search-bar" style="max-width:320px;">
@@ -414,6 +507,20 @@ export class FinancePage {
             </table>
           </div>
         </div>
+
+        <!-- Mobile List View -->
+        <div class="mobile-search hidden-desktop mb-4">
+          <div class="flex gap-2">
+            <div class="search-bar" style="flex:1;">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" placeholder="経費を検索..." id="expenseSearchMobile">
+            </div>
+            <button class="btn btn-filled" data-action="addExpense" style="padding: 0 var(--space-3); height: 40px; min-width: 40px;">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+        <div class="mobile-list hidden-desktop" id="expenseMobileList"></div>
       </div>
     `;
     this.renderExpenseTable();
@@ -429,6 +536,7 @@ export class FinancePage {
     }
 
     const tbody = $('#expenseTableBody');
+    const mobileList = $('#expenseMobileList');
     if (!tbody) return;
 
     if (data.length === 0) {
@@ -440,6 +548,14 @@ export class FinancePage {
           </div>
         </td></tr>
       `;
+      if (mobileList) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <p>経費データがありません</p>
+          </div>
+        `;
+      }
       return;
     }
 
@@ -464,6 +580,34 @@ export class FinancePage {
         </tr>
       `;
     }).join('');
+
+    if (mobileList) {
+      mobileList.innerHTML = data.map(item => {
+        return `
+          <div class="mobile-card" data-id="${item.id}">
+            <div class="mobile-card-avatar" style="background:var(--md-error-container); color:var(--md-error);">
+              <span class="material-symbols-outlined">trending_down</span>
+            </div>
+            <div class="mobile-card-main">
+              <div class="mobile-card-title">${item.title || '-'}</div>
+              <div class="mobile-card-sub">
+                <span class="chip chip-xs">${item.category || '-'}</span><span>·</span>
+                <span class="text-numeric" style="font-weight:600; color:var(--md-error);">${formatCurrency(item.amount)}</span>
+              </div>
+              <div class="mobile-card-sub" style="font-size: 11px; margin-top: 4px;">
+                <span>支払日: ${formatDate(item.date)}</span><span>·</span>
+                <span>${item.paymentMethod || '-'}</span>
+              </div>
+            </div>
+            <div class="mobile-card-end">
+              <button class="btn-icon" data-action="deleteExpense" data-id="${item.id}" title="削除" onclick="event.stopPropagation()">
+                <span class="material-symbols-outlined" style="font-size:20px; color:var(--md-error);">delete</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
 
     this._updateSortIndicators();
   }

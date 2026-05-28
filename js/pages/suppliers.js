@@ -38,19 +38,19 @@ export class SuppliersPage {
 
         <!-- Filters -->
         <div class="sup-filter-section">
-          <div class="sup-filter-chips" id="supCategoryChips">
+          <div class="chips-scroll" id="supCategoryChips">
             ${this.categories.map(c => `
               <button class="chip ${c === '全て' ? 'active' : ''}" data-category="${c}">${c}</button>
             `).join('')}
           </div>
-          <div class="search-bar sup-search">
+          <div class="search-bar sup-search hidden-mobile">
             <span class="material-symbols-outlined">search</span>
             <input type="text" placeholder="仕入れ先を検索..." id="supSearchInput">
           </div>
         </div>
 
-        <!-- Table -->
-        <div class="data-table-wrapper">
+        <!-- Table (Desktop View) -->
+        <div class="data-table-wrapper hidden-mobile">
           <div class="data-table-toolbar">
             <div class="data-table-toolbar-left">
               <span class="text-secondary" id="supCount">0件</span>
@@ -77,6 +77,20 @@ export class SuppliersPage {
             <p>仕入れ先が登録されていません</p>
           </div>
         </div>
+
+        <!-- Mobile List View -->
+        <div class="mobile-search hidden-desktop mb-4">
+          <div class="flex gap-2">
+            <div class="search-bar" style="flex:1;">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" placeholder="仕入れ先を検索..." id="supSearchInputMobile">
+            </div>
+            <button class="btn btn-filled" id="supAddBtnMobile" style="padding: 0 var(--space-3); height: 40px; min-width: 40px;">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+        <div class="mobile-list hidden-desktop" id="supMobileList"></div>
       </div>
     `;
   }
@@ -97,6 +111,7 @@ export class SuppliersPage {
   bindEvents() {
     // Add button
     $('#supAddBtn')?.addEventListener('click', () => this.showAddModal());
+    $('#supAddBtnMobile')?.addEventListener('click', () => this.showAddModal());
 
     // Category filter
     delegate('#supCategoryChips', '.chip', 'click', (e, target) => {
@@ -106,10 +121,22 @@ export class SuppliersPage {
       this.renderList();
     });
 
-    // Search
+    // Search (desktop)
     const searchInput = $('#supSearchInput');
     searchInput?.addEventListener('input', debounce(() => {
-      this.searchText = searchInput.value;
+      const val = searchInput.value;
+      this.searchText = val;
+      const mobileInput = $('#supSearchInputMobile');
+      if (mobileInput) mobileInput.value = val;
+      this.renderList();
+    }, 200));
+
+    // Search (mobile)
+    delegate('.page-suppliers', '#supSearchInputMobile', 'input', debounce((e) => {
+      const val = e.target.value;
+      this.searchText = val;
+      const desktopInput = $('#supSearchInput');
+      if (desktopInput) desktopInput.value = val;
       this.renderList();
     }, 200));
 
@@ -146,6 +173,27 @@ export class SuppliersPage {
         this.loadData();
       }
     });
+
+    // Mobile Actions
+    delegate('.page-suppliers', '#supMobileList .sup-edit-btn', 'click', (e, target) => {
+      e.stopPropagation();
+      const id = target.closest('.mobile-card').dataset.id;
+      const item = store.getById('suppliers', id);
+      if (item) this.showAddModal(item);
+    });
+
+    delegate('.page-suppliers', '#supMobileList .sup-delete-btn', 'click', async (e, target) => {
+      e.stopPropagation();
+      const id = target.closest('.mobile-card').dataset.id;
+      const item = store.getById('suppliers', id);
+      if (!item) return;
+      const confirmed = await confirmDialog('仕入れ先の削除', `「${item.name}」を削除しますか？この操作は取り消せません。`);
+      if (confirmed) {
+        store.delete('suppliers', id);
+        showSnackbar('仕入れ先を削除しました');
+        this.loadData();
+      }
+    });
   }
 
   getFilteredData() {
@@ -164,12 +212,21 @@ export class SuppliersPage {
     const tbody = $('#supTableBody');
     const emptyEl = $('#supEmpty');
     const countEl = $('#supCount');
+    const mobileList = $('#supMobileList');
 
     if (countEl) countEl.textContent = `${filtered.length}件`;
 
     if (filtered.length === 0) {
       if (tbody) tbody.innerHTML = '';
       if (emptyEl) emptyEl.style.display = '';
+      if (mobileList) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">store</span>
+            <p>仕入れ先が登録されていません</p>
+          </div>
+        `;
+      }
       return;
     }
 
@@ -203,6 +260,41 @@ export class SuppliersPage {
             </div>
           </td>
         </tr>
+      `).join('');
+    }
+
+    if (mobileList) {
+      mobileList.innerHTML = filtered.map(s => `
+        <div class="mobile-card" data-id="${s.id}" style="cursor: default;">
+          <div class="mobile-card-avatar" style="background: var(--md-tertiary-container); color: var(--md-tertiary-on-container);">
+            <span class="material-symbols-outlined">store</span>
+          </div>
+          <div class="mobile-card-main">
+            <div class="mobile-card-title">${s.name || '-'}</div>
+            <div class="mobile-card-sub">
+              <span>${s.category || '-'}</span>
+              ${s.contactPerson ? `<span>· 担当: ${s.contactPerson}</span>` : ''}
+            </div>
+            <div class="mobile-card-sub" style="margin-top: 4px;">
+              ${s.phone ? `<span>📞 ${s.phone}</span>` : ''}
+              ${s.rating ? `<span style="margin-left: 8px;">${renderStars(s.rating)}</span>` : ''}
+            </div>
+            ${s.address ? `<div class="mobile-card-sub" style="font-size: 11px; margin-top: 2px;">📍 ${s.address}</div>` : ''}
+          </div>
+          <div class="mobile-card-end" style="flex-direction: row; align-items: center; gap: 8px;">
+            ${s.website ? `
+              <a href="${s.website}" target="_blank" rel="noopener" class="btn-icon" title="サイトを開く" onclick="event.stopPropagation()" style="min-width: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="color:var(--md-primary);">open_in_new</span>
+              </a>
+            ` : ''}
+            <button class="btn-icon sup-edit-btn" title="編集" style="min-width: 40px; min-height: 40px;">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn-icon sup-delete-btn" title="削除" style="min-width: 40px; min-height: 40px;">
+              <span class="material-symbols-outlined" style="color:var(--md-error);">delete</span>
+            </button>
+          </div>
+        </div>
       `).join('');
     }
   }

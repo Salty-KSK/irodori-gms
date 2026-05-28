@@ -42,30 +42,30 @@ export class EquipmentPage {
         <!-- Category Filter -->
         <div class="eq-filter-section">
           <div class="eq-filter-row">
-            <div class="eq-filter-chips" id="eqCategoryChips">
+            <div class="chips-scroll" id="eqCategoryChips">
               ${this.categories.map(c => `
                 <button class="chip ${c === '全て' ? 'active' : ''}" data-category="${c}">${c}</button>
               `).join('')}
             </div>
           </div>
           <div class="eq-filter-row">
-            <div class="eq-status-chips" id="eqStatusChips">
+            <div class="chips-scroll" id="eqStatusChips">
               ${this.statuses.map(s => `
                 <button class="chip ${s === '全て' ? 'active' : ''}" data-status="${s}">${s}</button>
               `).join('')}
             </div>
-            <div class="search-bar eq-search">
+            <div class="search-bar eq-search hidden-mobile">
               <span class="material-symbols-outlined">search</span>
               <input type="text" placeholder="機材を検索..." id="eqSearchInput">
             </div>
           </div>
         </div>
 
-        <!-- Stats -->
-        <div class="eq-stats stagger-children" id="eqStats"></div>
+        <!-- Stats (Hidden on Mobile if not enough space, or keep responsive) -->
+        <div class="eq-stats stagger-children hidden-mobile" id="eqStats"></div>
 
-        <!-- Table -->
-        <div class="data-table-wrapper">
+        <!-- Table (Desktop View) -->
+        <div class="data-table-wrapper hidden-mobile">
           <div class="data-table-toolbar">
             <div class="data-table-toolbar-left">
               <span class="text-secondary" id="eqCount">0件</span>
@@ -92,6 +92,20 @@ export class EquipmentPage {
             <p>機材が登録されていません</p>
           </div>
         </div>
+
+        <!-- Mobile List View -->
+        <div class="mobile-search hidden-desktop mb-4">
+          <div class="flex gap-2">
+            <div class="search-bar" style="flex:1;">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" placeholder="機材を検索..." id="eqSearchInputMobile">
+            </div>
+            <button class="btn btn-filled" id="eqAddBtnMobile" style="padding: 0 var(--space-3); height: 40px; min-width: 40px;">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+        <div class="mobile-list hidden-desktop" id="eqMobileList"></div>
       </div>
     `;
   }
@@ -113,6 +127,7 @@ export class EquipmentPage {
   bindEvents() {
     // Add button
     $('#eqAddBtn')?.addEventListener('click', () => this.showAddModal());
+    $('#eqAddBtnMobile')?.addEventListener('click', () => this.showAddModal());
 
     // Category filter
     delegate('#eqCategoryChips', '.chip', 'click', (e, target) => {
@@ -130,10 +145,22 @@ export class EquipmentPage {
       this.renderList();
     });
 
-    // Search
+    // Search (desktop)
     const searchInput = $('#eqSearchInput');
     searchInput?.addEventListener('input', debounce(() => {
-      this.searchText = searchInput.value;
+      const val = searchInput.value;
+      this.searchText = val;
+      const mobileInput = $('#eqSearchInputMobile');
+      if (mobileInput) mobileInput.value = val;
+      this.renderList();
+    }, 200));
+
+    // Search (mobile)
+    delegate('.page-equipment', '#eqSearchInputMobile', 'input', debounce((e) => {
+      const val = e.target.value;
+      this.searchText = val;
+      const desktopInput = $('#eqSearchInput');
+      if (desktopInput) desktopInput.value = val;
       this.renderList();
     }, 200));
 
@@ -150,8 +177,14 @@ export class EquipmentPage {
       this.renderList();
     });
 
-    // Row click
+    // Row click (Desktop)
     delegate('#eqTableBody', 'tr', 'click', (e, target) => {
+      const id = target.dataset.id;
+      if (id) this.showDetailModal(id);
+    });
+
+    // Mobile card click
+    delegate('.page-equipment', '#eqMobileList .mobile-card', 'click', (e, target) => {
       const id = target.dataset.id;
       if (id) this.showDetailModal(id);
     });
@@ -216,12 +249,21 @@ export class EquipmentPage {
     const tbody = $('#eqTableBody');
     const emptyEl = $('#eqEmpty');
     const countEl = $('#eqCount');
+    const mobileList = $('#eqMobileList');
 
     if (countEl) countEl.textContent = `${filtered.length}件`;
 
     if (filtered.length === 0) {
       if (tbody) tbody.innerHTML = '';
       if (emptyEl) emptyEl.style.display = '';
+      if (mobileList) {
+        mobileList.innerHTML = `
+          <div class="mobile-empty">
+            <span class="material-symbols-outlined">camera</span>
+            <p>機材が登録されていません</p>
+          </div>
+        `;
+      }
       return;
     }
 
@@ -243,6 +285,31 @@ export class EquipmentPage {
           <td class="text-numeric">${formatCurrency(eq.purchasePrice)}</td>
           <td>${this.renderCondition(eq.condition)}</td>
         </tr>
+      `).join('');
+    }
+
+    if (mobileList) {
+      mobileList.innerHTML = filtered.map(eq => `
+        <div class="mobile-card" data-id="${eq.id}">
+          <div class="mobile-card-avatar" style="background: var(--md-primary-container); color: var(--md-primary);">
+            <span class="material-symbols-outlined">${this.getCategoryIcon(eq.category)}</span>
+          </div>
+          <div class="mobile-card-main">
+            <div class="mobile-card-title">${eq.name || '-'}</div>
+            <div class="mobile-card-sub">
+              <span>${eq.brand || '-'}</span>
+              ${eq.model ? `<span>· ${eq.model}</span>` : ''}
+            </div>
+            <div class="mobile-card-sub" style="margin-top: 4px;">
+              <span class="chip chip-xs">${eq.category || '-'}</span>
+              <span class="text-numeric" style="margin-left:8px; font-weight:600;">${formatCurrency(eq.purchasePrice)}</span>
+            </div>
+          </div>
+          <div class="mobile-card-end">
+            ${this.renderEquipmentStatus(eq.status)}
+            <span class="material-symbols-outlined mobile-card-chevron">chevron_right</span>
+          </div>
+        </div>
       `).join('');
     }
   }
