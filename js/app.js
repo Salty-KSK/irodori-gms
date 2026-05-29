@@ -25,17 +25,15 @@ function isMobile() {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
 }
 
-// WebView（アプリ内ブラウザ）判定
+// WebView（アプリ内ブラウザ）判定 - 既知アプリのみ検出
 function isWebView() {
   const ua = navigator.userAgent || '';
-  // LINE, Instagram, Facebook, Twitter, その他アプリ内ブラウザ検出
   return /Line\//i.test(ua) ||
          /FBAN|FBAV/i.test(ua) ||       // Facebook
          /Instagram/i.test(ua) ||
          /Twitter/i.test(ua) ||
          /MicroMessenger/i.test(ua) ||   // WeChat
-         /GSA\//i.test(ua) ||            // Google Search App
-         (/iPhone|iPod|iPad/.test(ua) && !(/Safari/i.test(ua) && !/CriOS/.test(ua)) && !/Chrome/.test(ua));
+         /GSA\//i.test(ua);              // Google Search App
 }
 
 class App {
